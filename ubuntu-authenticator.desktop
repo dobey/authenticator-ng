@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=uAuth
+Comment=Two factor authenticaton helper
+Exec=./ubuntu-authenticator %u
+Terminal=false
+Icon=ubuntu-authenticator.svg
+X-Ubuntu-Touch=true

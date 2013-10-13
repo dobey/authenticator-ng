@@ -1,0 +1,15 @@
+{
+    "description": "Two factor authentication helper app.",
+    "framework": "ubuntu-sdk-13.10",
+    "architecture": "armhf",
+    "hooks": {
+        "ubuntu-sso": {
+            "apparmor": "ubuntu-authenticator.json",
+            "desktop": "ubuntu-authenticator.desktop"
+        }
+    },
+    "maintainer": "Michael Zanetti <michael.zanetti@canonical.com>",
+    "name": "com.ubuntu.developer.mzanetti.ubuntu-authenticator",
+    "title": "ubuntu-authenticator",
+    "version": "0.1.0"
+}
