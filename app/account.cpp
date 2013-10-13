@@ -89,9 +89,9 @@ void Account::setPinLength(int pinLength)
     }
 }
 
-QString Account::totp() const
+QString Account::otp() const
 {
-    return m_totp;
+    return m_otp;
 }
 
 void Account::next()
@@ -104,12 +104,12 @@ void Account::next()
 void Account::generate()
 {
     if (m_secret.isEmpty()) {
-        qWarning() << "No secret set. Cannot generate totp.";
+        qWarning() << "No secret set. Cannot generate otp.";
         return;
     }
 
     if (m_pinLength <= 0) {
-        qWarning() << "Pin length is" << m_pinLength << ". Cannot generate totp.";
+        qWarning() << "Pin length is" << m_pinLength << ". Cannot generate otp.";
         return;
     }
 
@@ -118,9 +118,9 @@ void Account::generate()
     char code[6];
     oath_hotp_generate(hexSecret.data(), hexSecret.length(), m_counter, m_pinLength, false, OATH_HOTP_DYNAMIC_TRUNCATION, code);
 
-    m_totp = QLatin1String(code);
-    //    qDebug() << "Generating secret" << m_name << m_secret << m_counter << m_pinLength << m_totp;
-    emit totpChanged();
+    m_otp = QLatin1String(code);
+    //    qDebug() << "Generating secret" << m_name << m_secret << m_counter << m_pinLength << m_otp;
+    emit otpChanged();
 
 }
 

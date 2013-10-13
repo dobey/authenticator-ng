@@ -31,7 +31,7 @@ class Account : public QObject
     Q_PROPERTY(QString secret READ secret WRITE setSecret NOTIFY secretChanged)
     Q_PROPERTY(quint64 counter READ counter WRITE setCounter NOTIFY counterChanged)
     Q_PROPERTY(int pinLength READ pinLength WRITE setPinLength NOTIFY pinLengthChanged)
-    Q_PROPERTY(QString totp READ totp NOTIFY totpChanged)
+    Q_PROPERTY(QString otp READ otp NOTIFY otpChanged)
 public:
     explicit Account(QObject *parent = 0);
 
@@ -47,14 +47,14 @@ public:
     int pinLength() const;
     void setPinLength(int pinLength);
 
-    QString totp() const;
+    QString otp() const;
 
 signals:
     void nameChanged();
     void secretChanged();
     void counterChanged();
     void pinLengthChanged();
-    void totpChanged();
+    void otpChanged();
 
 public slots:
     void next();
@@ -69,7 +69,7 @@ private:
     QString m_secret;
     quint64 m_counter;
     int m_pinLength;
-    QString m_totp;
+    QString m_otp;
 };
 
 #endif // ACCOUNT_H

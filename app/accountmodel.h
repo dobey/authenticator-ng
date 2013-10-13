@@ -34,7 +34,7 @@ public:
         RoleSecret,
         RoleCounter,
         RolePinLength,
-        RoleTotp
+        RoleOtp
     };
 
     explicit AccountModel(QObject *parent = 0);

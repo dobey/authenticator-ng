@@ -126,7 +126,7 @@ MainView {
                             right: parent.right
                         }
                         fontSize: "x-large"
-                        text: totp
+                        text: otp
                     }
                 }
 

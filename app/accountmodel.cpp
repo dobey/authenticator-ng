@@ -46,6 +46,7 @@ AccountModel::AccountModel(QObject *parent) :
 
 int AccountModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return m_accounts.count();
 }
 
@@ -60,8 +61,8 @@ QVariant AccountModel::data(const QModelIndex &index, int role) const
         return m_accounts.at(index.row())->counter();
     case RolePinLength:
         return m_accounts.at(index.row())->pinLength();
-    case RoleTotp:
-        return m_accounts.at(index.row())->totp();
+    case RoleOtp:
+        return m_accounts.at(index.row())->otp();
     }
 
     return QVariant();
@@ -116,14 +117,14 @@ QHash<int, QByteArray> AccountModel::roleNames() const
     roles.insert(RoleSecret, "secret");
     roles.insert(RoleCounter, "counter");
     roles.insert(RolePinLength, "pinLength");
-    roles.insert(RoleTotp, "totp");
+    roles.insert(RoleOtp, "otp");
     return roles;
 }
 
 void AccountModel::generateNext(int account)
 {
     m_accounts.at(account)->next();
-    emit dataChanged(index(account), index(account), QVector<int>() << RoleCounter << RoleTotp);
+    emit dataChanged(index(account), index(account), QVector<int>() << RoleCounter << RoleOtp);
 }
 
 void AccountModel::accountChanged()
