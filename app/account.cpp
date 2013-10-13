@@ -113,11 +113,59 @@ void Account::generate()
         return;
     }
 
+    QByteArray hexSecret = fromBase32(m_secret.toLatin1());
+    qDebug() << "hexSecret" << hexSecret;
     char code[6];
-    oath_hotp_generate(m_secret.toLatin1().data(), m_secret.length(), m_counter, m_pinLength, false, OATH_HOTP_DYNAMIC_TRUNCATION, code);
+    oath_hotp_generate(hexSecret.data(), hexSecret.length(), m_counter, m_pinLength, false, OATH_HOTP_DYNAMIC_TRUNCATION, code);
 
     m_totp = QLatin1String(code);
-//    qDebug() << "Generating secret" << m_name << m_secret << m_counter << m_pinLength << m_totp;
+    //    qDebug() << "Generating secret" << m_name << m_secret << m_counter << m_pinLength << m_totp;
     emit totpChanged();
+
+}
+
+QByteArray Account::fromBase32(const QByteArray &input)
+{
+    int buffer = 0;
+    int bitsLeft = 0;
+    int count = 0;
+
+    QByteArray result;
+
+    for (int i = 0; i < input.length(); ++i) {
+
+        char ch = input.at(i);
+
+        if (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n' || ch == '-') {
+            continue;
+        }
+        buffer <<= 5;
+
+        if (ch == '0') {
+            ch = 'O';
+        } else if (ch == '1') {
+            ch = 'L';
+        } else if (ch == '8') {
+            ch = 'B';
+        }
+
+        if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')) {
+            ch = (ch & 0x1F) - 1;
+        } else if (ch >= '2' && ch <= '7') {
+            ch -= '2' - 26;
+        } else {
+            return QByteArray();
+        }
+
+        buffer |= ch;
+        bitsLeft += 5;
+        if (bitsLeft >= 8) {
+            result[count++] = buffer >> (bitsLeft - 8);
+            bitsLeft -= 8;
+        }
+
+    }
+
+    return result;
 
 }

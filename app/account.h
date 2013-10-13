@@ -62,6 +62,8 @@ public slots:
 private:
     void generate();
 
+    static QByteArray fromBase32(const QByteArray &input);
+
 private:
     QString m_name;
     QString m_secret;
