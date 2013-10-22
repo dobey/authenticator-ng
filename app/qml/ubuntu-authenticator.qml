@@ -29,8 +29,8 @@ import QtQuick.Window 2.0
 MainView {
 
     // FIXME: organisationName doesn't exist... need to set stuff in C++
-    //    organizationName: "com.ubuntu.developer.mzanetti.ubuntu-totp-app"
-    //    applicationName: "ubuntu-totp-app"
+    //    organizationName: "com.ubuntu.developer.mzanetti.ubuntu-authenticator"
+    //applicationName: "com.ubuntu.developer.mzanetti.ubuntu-authenticator"
 
     //automaticOrientation: true
 
@@ -49,7 +49,7 @@ MainView {
     }
     Page {
         id: mainPage
-        title: "Ubuntu Auth"
+        title: "Authenticator"
         visible: false
 
         tools: ToolbarItems {
@@ -93,10 +93,21 @@ MainView {
             id: accountsListView
             anchors.fill: parent
             model: accounts
+            interactive: contentHeight > height - units.gu(6) //FIXME: -6gu because of the panel being locked to open
 
             delegate: Empty {
                 id: accountDelegate
                 height: delegateColumn.height + units.gu(4)
+                removable: true
+
+                property bool activated: false
+
+                onItemRemoved: {
+                    print("item removed:", accounts.get(index))
+                    var popup = PopupUtils.open(removeQuestionComponent, accountsListView, {account: accounts.get(index)})
+                    popup.accepted.connect(function() { accounts.deleteAccount(index); });
+                    popup.rejected.connect(function() { accounts.refresh(); });
+                }
 
                 Column {
                     id: delegateColumn
@@ -106,7 +117,7 @@ MainView {
                         right: parent.right
                         leftMargin: units.gu(2)
                         topMargin: units.gu(2)
-                        rightMargin: units.gu(10)
+                        rightMargin: refreshButton.width + units.gu(2)
                     }
                     spacing: units.gu(1)
                     height: childrenRect.height
@@ -121,78 +132,47 @@ MainView {
                     }
 
                     Label {
+                        id: otpLabel
                         anchors {
                             left: parent.left
                             right: parent.right
                         }
                         fontSize: "x-large"
-                        text: otp
+                        text: accountDelegate.activated ? otp : ""
+                        Button {
+                            anchors {
+                                left: parent.left
+                                right: parent.right
+                            }
+                            text: "Click here to generate a password"
+                            visible: !accountDelegate.activated
+                            onClicked: {
+                                accounts.get(index).next()
+                                accountDelegate.activated = true
+                            }
+                        }
                     }
                 }
 
                 Icon {
+                    id: refreshButton
                     anchors {
                         right: parent.right
                         rightMargin: units.gu(2)
                         verticalCenter: parent.verticalCenter
                     }
-                    width: units.gu(6)
+                    width: accountDelegate.activated ? units.gu(6) : 0
                     height: units.gu(6)
                     name: "reload"
+                    visible: accountDelegate.activated
                     MouseArea {
                         anchors.fill: parent
                         onClicked: accounts.generateNext(index)
                     }
                 }
 
-
-                onClicked: {
-                    PopupUtils.open(totpDialogComponent, accountDelegate, {account: accounts.get(index)})
-                }
-
                 onPressAndHold: {
-                    PopupUtils.open(contextMenuComponent, accountDelegate, {index: index})
-                }
-            }
-        }
-
-        Component {
-            id: contextMenuComponent
-            Popover {
-                id: contextMenu
-                property int index
-
-                Column {
-                    width: parent.width
-                    height: childrenRect.height
-
-                    Repeater {
-                        model: ListModel {
-                            ListElement { text: "Edit"; icon: "edit" }
-                            ListElement { text: "Remove"; icon: "delete" }
-                        }
-
-                        delegate: Standard {
-                            text: model.text
-                            icon: Icon {
-                                name: model.icon
-                                height: parent.height
-                                width: height
-                            }
-
-                            onClicked: {
-                                switch(index) {
-                                case 0:
-                                    PopupUtils.open(editSheetComponent, mainPage, {account: accounts.get(contextMenu.index)})
-                                    break;
-                                case 1:
-                                    accounts.deleteAccount(contextMenu.index);
-                                    break;
-                                }
-                                PopupUtils.close(contextMenu)
-                            }
-                        }
-                    }
+                    PopupUtils.open(editSheetComponent, mainPage, {account: accounts.get(index)})
                 }
             }
         }
@@ -434,4 +414,32 @@ MainView {
         }
     }
 
+    Component {
+        id: removeQuestionComponent
+        Dialog {
+            id: removeQuestionDialog
+            title: "Remove account?"
+            text: qsTr("Are you sure you want to remove %1?").arg(account.name)
+
+            property QtObject account
+
+            signal accepted()
+            signal rejected()
+
+            Button {
+                text: qsTr("Yes")
+                onClicked: {
+                    PopupUtils.close(removeQuestionDialog);
+                    removeQuestionDialog.accepted();
+                }
+            }
+            Button {
+                text: qsTr("Cancel")
+                onClicked: {
+                    PopupUtils.close(removeQuestionDialog);
+                    removeQuestionDialog.rejected();
+                }
+            }
+        }
+    }
 }

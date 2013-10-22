@@ -22,6 +22,7 @@
 #define ACCOUNT_H
 
 #include <QObject>
+#include <QUuid>
 
 class Account : public QObject
 {
@@ -33,7 +34,9 @@ class Account : public QObject
     Q_PROPERTY(int pinLength READ pinLength WRITE setPinLength NOTIFY pinLengthChanged)
     Q_PROPERTY(QString otp READ otp NOTIFY otpChanged)
 public:
-    explicit Account(QObject *parent = 0);
+    explicit Account(const QUuid &id, QObject *parent = 0);
+
+    QUuid id() const;
 
     QString name() const;
     void setName(const QString &name);
@@ -65,6 +68,7 @@ private:
     static QByteArray fromBase32(const QByteArray &input);
 
 private:
+    QUuid m_id;
     QString m_name;
     QString m_secret;
     quint64 m_counter;

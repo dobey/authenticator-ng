@@ -27,11 +27,17 @@ extern "C" {
 #include "oath.h"
 }
 
-Account::Account(QObject *parent) :
+Account::Account(const QUuid &id, QObject *parent) :
     QObject(parent),
+    m_id(id),
     m_counter(0),
     m_pinLength(6)
 {
+}
+
+QUuid Account::id() const
+{
+    return m_id;
 }
 
 QString Account::name() const
@@ -97,6 +103,7 @@ QString Account::otp() const
 void Account::next()
 {
     m_counter++;
+    qDebug() << "emitting changed";
     emit counterChanged();
     generate();
 }

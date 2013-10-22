@@ -46,7 +46,7 @@ setup_adb_forwarding() {
 }
 
 install_dependencies() {
-    exec_with_ssh "cd $CODE_DIR/3rdParty/oath-toolkit-2.4.0/liboath/ && ./configure && make -j2"
+    exec_with_adb apt-get --yes install build-essential liboath-dev libzbar-dev libv4l-dev qtbase5-dev qtdeclarative5-dev
 }
 
 sync_code() {

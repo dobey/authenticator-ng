@@ -51,6 +51,7 @@ public:
 
 public slots:
     void generateNext(int account);
+    void refresh();
 
 private slots:
     void accountChanged();

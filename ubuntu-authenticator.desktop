@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Name=uAuth
+Name=Authenticator
 Comment=Two factor authenticaton helper
 Exec=./ubuntu-authenticator %u
 Terminal=false

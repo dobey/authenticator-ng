@@ -32,14 +32,34 @@ AccountModel::AccountModel(QObject *parent) :
     QSettings settings;
     qDebug() << "loading settings file:" << settings.fileName();
     foreach(const QString & group, settings.childGroups()) {
-        qDebug() << "found group" << group;
+        qDebug() << "found group" << group << QUuid(group).toString();
+
+        QUuid id = QUuid(group);
+        bool migrateAccount = false;
+        if (id.isNull()) {
+            migrateAccount = true;
+            id = QUuid::createUuid();
+        }
+
         settings.beginGroup(group);
-        Account *account = new Account(this);
+        Account *account = new Account(id, this);
         account->setName(settings.value("account").toString());
         account->setSecret(settings.value("secret").toString());
         account->setCounter(settings.value("counter").toInt());
         account->setPinLength(settings.value("pinLength").toInt());
+
+        connect(account, SIGNAL(nameChanged()), SLOT(accountChanged()));
+        connect(account, SIGNAL(secretChanged()), SLOT(accountChanged()));
+        connect(account, SIGNAL(counterChanged()), SLOT(accountChanged()));
+        connect(account, SIGNAL(pinLengthChanged()), SLOT(accountChanged()));
+        connect(account, SIGNAL(otpChanged()), SLOT(accountChanged()));
+
         m_accounts.append(account);
+
+        if (migrateAccount) {
+            settings.remove("");
+            storeAccount(account);
+        }
         settings.endGroup();
     }
 }
@@ -75,14 +95,14 @@ Account *AccountModel::get(int index) const
 
 Account *AccountModel::createAccount()
 {
-    Account *account = new Account(this);
+    Account *account = new Account(QUuid::createUuid(), this);
     beginInsertRows(QModelIndex(), m_accounts.count(), m_accounts.count());
     m_accounts.append(account);
     connect(account, SIGNAL(nameChanged()), SLOT(accountChanged()));
     connect(account, SIGNAL(secretChanged()), SLOT(accountChanged()));
     connect(account, SIGNAL(counterChanged()), SLOT(accountChanged()));
     connect(account, SIGNAL(pinLengthChanged()), SLOT(accountChanged()));
-    connect(account, SIGNAL(totpChanged()), SLOT(accountChanged()));
+    connect(account, SIGNAL(otpChanged()), SLOT(accountChanged()));
 
     storeAccount(account);
 
@@ -94,12 +114,13 @@ void AccountModel::deleteAccount(int index)
 {
     beginRemoveRows(QModelIndex(), index, index);
 
+    Account *account = m_accounts.takeAt(index);
     QSettings settings;
-    settings.beginGroup(QString::number(index));
+    settings.beginGroup(account->id().toString());
     settings.remove("");
     settings.endGroup();
 
-    m_accounts.takeAt(index)->deleteLater();
+    account->deleteLater();
 
     endRemoveRows();
 }
@@ -127,6 +148,12 @@ void AccountModel::generateNext(int account)
     emit dataChanged(index(account), index(account), QVector<int>() << RoleCounter << RoleOtp);
 }
 
+void AccountModel::refresh()
+{
+    emit beginResetModel();
+    emit endResetModel();
+}
+
 void AccountModel::accountChanged()
 {
     Account *account = qobject_cast<Account*>(sender());
@@ -140,7 +167,7 @@ void AccountModel::accountChanged()
 void AccountModel::storeAccount(Account *account)
 {
     QSettings settings;
-    settings.beginGroup(QString::number(m_accounts.indexOf(account)));
+    settings.beginGroup(account->id().toString());
     settings.setValue("account", account->name());
     settings.setValue("secret", account->secret());
     settings.setValue("counter", account->counter());

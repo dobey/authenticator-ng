@@ -1,6 +1,6 @@
 {
     "policy_groups": [
-        "networking"
+        "camera"
     ],
     "policy_version": 1
 }

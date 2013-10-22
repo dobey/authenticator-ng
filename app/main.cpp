@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     QQuickView view;
 
     qmlRegisterType<AccountModel>("OAth", 1, 0, "AccountModel");
-    qmlRegisterType<Account>("OAth", 1, 0, "Account");
+    qmlRegisterUncreatableType<Account>("OAth", 1, 0, "Account", "Use AccountModel::createAccount() to create a new account");
     qmlRegisterType<QRCodeReader>("OAth", 1, 0, "QRCodeReader");
 
     view.setResizeMode(QQuickView::SizeRootObjectToView);
