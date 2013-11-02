@@ -225,7 +225,7 @@ MainView {
                     spacing: units.gu(2)
 
                     Label {
-                        text: "Name:"
+                        text: "Name"
                     }
                     TextField {
                         id: nameField
@@ -236,7 +236,7 @@ MainView {
                     }
 
                     Label {
-                        text: "Secret:"
+                        text: "Key"
                     }
                     TextArea {
                         id: secretField
@@ -255,7 +255,7 @@ MainView {
                             spacing: units.gu(1)
 
                             Label {
-                                text: "Counter:"
+                                text: "Counter"
                                 anchors.verticalCenter: parent.verticalCenter
                             }
                             TextField {
@@ -270,7 +270,7 @@ MainView {
                             spacing: units.gu(1)
 
                             Label {
-                                text: "Pin length:"
+                                text: "Pin length"
                                 anchors.verticalCenter: parent.verticalCenter
                             }
                             TextField {
