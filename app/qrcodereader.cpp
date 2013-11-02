@@ -78,8 +78,55 @@ void QRCodeReader::grab()
 
     qDebug() << "got image" << img.size();
 
-    zbar::QZBarImage image(img);
-    zbar::Image tmp = image.convert(*(long*)"Y800");
+    Reader *reader = new Reader;
+    reader->moveToThread(&m_readerThread);
+    connect(&m_readerThread, SIGNAL(finished()), reader, SLOT(deleteLater()));
+    connect(reader, SIGNAL(resultReady(QString, QString)), this, SLOT(handleResults(QString, QString)));
+    m_readerThread.start();
+
+    QMetaObject::invokeMethod(reader, "doWork", Q_ARG(QImage, img));
+}
+
+void QRCodeReader::handleResults(const QString &type, const QString &text)
+{
+    qDebug() << "parsed:" << type << text;
+
+    if (type == "QR-Code" && text.startsWith(QStringLiteral("otpauth://hotp/"))) {
+        QUrl url(text);
+
+        qDebug() << url.host() << url.path() << url.query();
+
+        m_accountName = url.path();
+        if (m_accountName.startsWith('/')) {
+            m_accountName.remove(0, 1);
+        }
+
+        QUrlQuery query(url.query());
+
+        for (int i = 0; i < query.queryItems().count(); ++i) {
+            if (query.queryItems().at(i).first == "secret") {
+                m_secret = query.queryItems().at(i).second;
+            }
+            if (query.queryItems().at(i).first == "counter") {
+                m_counter = query.queryItems().at(i).second.toULong();
+            }
+        }
+
+        qDebug() << "Account:" << m_accountName;
+        qDebug() << "Secret:" << m_secret;
+        qDebug() << "Counter:" << m_counter;
+
+        emit validChanged();
+
+    }
+
+}
+
+void Reader::doWork(const QImage &image)
+{
+
+    zbar::QZBarImage img(image);
+    zbar::Image tmp = img.convert(*(long*)"Y800");
 
     // create a reader
     zbar::ImageScanner scanner;
@@ -91,11 +138,11 @@ void QRCodeReader::grab()
     int n = scanner.scan(tmp);
     qDebug() << "scanner ret" << n;
 
-    image.set_symbols(tmp.get_symbols());
+    img.set_symbols(tmp.get_symbols());
 
     // extract results
-    for(zbar::Image::SymbolIterator symbol = image.symbol_begin();
-        symbol != image.symbol_end();
+    for(zbar::Image::SymbolIterator symbol = img.symbol_begin();
+        symbol != img.symbol_end();
         ++symbol) {
 
         QString typeName = QString::fromStdString(symbol->get_type_name());
@@ -103,37 +150,10 @@ void QRCodeReader::grab()
 
         qDebug() << "Code recognized:" << typeName << ", Text:" << symbolString;
 
-        if (typeName == "QR-Code" && symbolString.startsWith(QStringLiteral("otpauth://hotp/"))) {
-
-            QUrl url(symbolString);
-
-            qDebug() << url.host() << url.path() << url.query();
-
-            m_accountName = url.path();
-            if (m_accountName.startsWith('/')) {
-                m_accountName.remove(0, 1);
-            }
-
-            QUrlQuery query(url.query());
-
-            for (int i = 0; i < query.queryItems().count(); ++i) {
-                if (query.queryItems().at(i).first == "secret") {
-                    m_secret = query.queryItems().at(i).second;
-                }
-                if (query.queryItems().at(i).first == "counter") {
-                    m_counter = query.queryItems().at(i).second.toULong();
-                }
-            }
-
-            qDebug() << "Account:" << m_accountName;
-            qDebug() << "Secret:" << m_secret;
-            qDebug() << "Counter:" << m_counter;
-
-            emit validChanged();
-        }
+        emit resultReady(typeName, symbolString);
     }
 
     tmp.set_data(NULL, 0);
-    image.set_data(NULL, 0);
+    img.set_data(NULL, 0);
 
 }

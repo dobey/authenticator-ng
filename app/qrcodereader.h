@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <QQuickWindow>
+#include <QThread>
 
 class QRCodeReader : public QObject
 {
@@ -46,12 +47,28 @@ public slots:
 signals:
     void validChanged();
 
+private slots:
+    void handleResults(const QString &type, const QString &text);
+
 private:
     QQuickWindow *m_mainWindow;
 
     QString m_accountName;
     QString m_secret;
     quint64 m_counter;
+
+    QThread m_readerThread;
+};
+
+class Reader : public QObject
+{
+    Q_OBJECT
+
+public slots:
+    void doWork(const QImage &image);
+
+signals:
+    void resultReady(const QString &type, const QString &text);
 };
 
 #endif // QRCODEREADER_H
