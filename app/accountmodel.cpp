@@ -29,7 +29,7 @@
 AccountModel::AccountModel(QObject *parent) :
     QAbstractListModel(parent)
 {
-    QSettings settings;
+    QSettings settings("com.ubuntu.developer.mzanetti.ubuntu-authenticator", "ubuntu-authenticator");
     qDebug() << "loading settings file:" << settings.fileName();
     foreach(const QString & group, settings.childGroups()) {
         qDebug() << "found group" << group << QUuid(group).toString();
@@ -115,7 +115,7 @@ void AccountModel::deleteAccount(int index)
     beginRemoveRows(QModelIndex(), index, index);
 
     Account *account = m_accounts.takeAt(index);
-    QSettings settings;
+    QSettings settings("com.ubuntu.developer.mzanetti.ubuntu-authenticator", "ubuntu-authenticator");
     settings.beginGroup(account->id().toString());
     settings.remove("");
     settings.endGroup();
@@ -166,7 +166,7 @@ void AccountModel::accountChanged()
 
 void AccountModel::storeAccount(Account *account)
 {
-    QSettings settings;
+    QSettings settings("com.ubuntu.developer.mzanetti.ubuntu-authenticator", "ubuntu-authenticator");
     settings.beginGroup(account->id().toString());
     settings.setValue("account", account->name());
     settings.setValue("secret", account->secret());

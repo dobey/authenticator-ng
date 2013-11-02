@@ -28,9 +28,7 @@ import QtQuick.Window 2.0
 
 MainView {
 
-    // FIXME: organisationName doesn't exist... need to set stuff in C++
-    //    organizationName: "com.ubuntu.developer.mzanetti.ubuntu-authenticator"
-    //applicationName: "com.ubuntu.developer.mzanetti.ubuntu-authenticator"
+    applicationName: "com.ubuntu.developer.mzanetti.ubuntu-authenticator"
 
     //automaticOrientation: true
 

@@ -30,9 +30,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QCoreApplication::setOrganizationName("com.ubuntu.developer.mzanetti.ubuntu-authenticator");
-    QCoreApplication::setApplicationName("ubuntu-authenticator");
-
     QQuickView view;
 
     qmlRegisterType<AccountModel>("OAth", 1, 0, "AccountModel");
