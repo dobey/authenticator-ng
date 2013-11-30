@@ -23,17 +23,26 @@
 
 #include <QObject>
 #include <QUuid>
+#include <QTimer>
 
 class Account : public QObject
 {
     Q_OBJECT
+    Q_ENUMS(Type)
 
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(Type type READ type WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QString secret READ secret WRITE setSecret NOTIFY secretChanged)
     Q_PROPERTY(quint64 counter READ counter WRITE setCounter NOTIFY counterChanged)
+    Q_PROPERTY(int timeStep READ timeStep WRITE setTimeStep NOTIFY timeStepChanged)
     Q_PROPERTY(int pinLength READ pinLength WRITE setPinLength NOTIFY pinLengthChanged)
     Q_PROPERTY(QString otp READ otp NOTIFY otpChanged)
 public:
+    enum Type {
+        TypeHOTP,
+        TypeTOTP
+    };
+
     explicit Account(const QUuid &id, QObject *parent = 0);
 
     QUuid id() const;
@@ -41,39 +50,52 @@ public:
     QString name() const;
     void setName(const QString &name);
 
+    Type type() const;
+    void setType(Type type);
+
     QString secret() const;
     void setSecret(const QString &secret);
 
     quint64 counter() const;
     void setCounter(quint64 counter);
 
+    int timeStep() const;
+    void setTimeStep(int timeStep);
+
     int pinLength() const;
     void setPinLength(int pinLength);
 
     QString otp() const;
 
+    Q_INVOKABLE qint64 msecsToNext() const;
+
 signals:
     void nameChanged();
+    void typeChanged();
     void secretChanged();
     void counterChanged();
+    void timeStepChanged();
     void pinLengthChanged();
     void otpChanged();
 
 public slots:
+    void generate();
     void next();
 
 private:
-    void generate();
 
     static QByteArray fromBase32(const QByteArray &input);
 
 private:
     QUuid m_id;
     QString m_name;
+    Type m_type;
     QString m_secret;
     quint64 m_counter;
+    int m_timeStep;
     int m_pinLength;
     QString m_otp;
+    QTimer m_totpTimer;
 };
 
 #endif // ACCOUNT_H

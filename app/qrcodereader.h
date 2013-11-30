@@ -21,6 +21,8 @@
 #ifndef QRCODEREADER_H
 #define QRCODEREADER_H
 
+#include "account.h"
+
 #include <QObject>
 #include <QQuickWindow>
 #include <QThread>
@@ -30,16 +32,22 @@ class QRCodeReader : public QObject
     Q_OBJECT
     Q_PROPERTY(bool valid READ valid NOTIFY validChanged)
     Q_PROPERTY(QString accountName READ accountName NOTIFY validChanged)
+    Q_PROPERTY(Account::Type type READ type NOTIFY validChanged)
     Q_PROPERTY(QString secret READ secret NOTIFY validChanged)
     Q_PROPERTY(quint64 counter READ counter NOTIFY validChanged)
+    Q_PROPERTY(int timeStep READ timeStep NOTIFY validChanged)
+    Q_PROPERTY(int pinLength READ pinLength NOTIFY validChanged)
 
 public:
     explicit QRCodeReader(QObject *parent = 0);
 
     bool valid() const;
     QString accountName() const;
+    Account::Type type() const;
     QString secret() const;
     quint64 counter() const;
+    int timeStep() const;
+    int pinLength() const;
 
 public slots:
     void grab();
@@ -54,8 +62,11 @@ private:
     QQuickWindow *m_mainWindow;
 
     QString m_accountName;
+    Account::Type m_type;
     QString m_secret;
     quint64 m_counter;
+    int m_timeStep;
+    int m_pinLength;
 
     QThread m_readerThread;
 };

@@ -53,6 +53,11 @@ QString QRCodeReader::accountName() const
     return m_accountName;
 }
 
+Account::Type QRCodeReader::type() const
+{
+    return m_type;
+}
+
 QString QRCodeReader::secret() const
 {
     return m_secret;
@@ -61,6 +66,16 @@ QString QRCodeReader::secret() const
 quint64 QRCodeReader::counter() const
 {
     return m_counter;
+}
+
+int QRCodeReader::timeStep() const
+{
+    return m_timeStep;
+}
+
+int QRCodeReader::pinLength() const
+{
+    return m_pinLength;
 }
 
 void QRCodeReader::grab()
@@ -72,6 +87,8 @@ void QRCodeReader::grab()
     m_accountName.clear();
     m_secret.clear();
     m_counter = 0;
+    m_timeStep = 30;
+    m_pinLength = 6;
     emit validChanged();
 
     QImage img = m_mainWindow->grabWindow();
@@ -91,10 +108,15 @@ void QRCodeReader::handleResults(const QString &type, const QString &text)
 {
     qDebug() << "parsed:" << type << text;
 
-    if (type == "QR-Code" && text.startsWith(QStringLiteral("otpauth://hotp/"))) {
+    if (type == "QR-Code" && text.startsWith(QStringLiteral("otpauth://"))) {
         QUrl url(text);
 
-        qDebug() << url.host() << url.path() << url.query();
+        qDebug() << url.host() << url.path() << url.query() << url.authority();
+
+        m_type = Account::TypeHOTP;
+        if (url.host() == "totp") {
+            m_type = Account::TypeTOTP;
+        }
 
         m_accountName = url.path();
         if (m_accountName.startsWith('/')) {
@@ -110,11 +132,19 @@ void QRCodeReader::handleResults(const QString &type, const QString &text)
             if (query.queryItems().at(i).first == "counter") {
                 m_counter = query.queryItems().at(i).second.toULong();
             }
+            if (query.queryItems().at(i).first == "period") {
+                m_timeStep = query.queryItems().at(i).second.toInt();
+            }
+            if (query.queryItems().at(i).first == "digits") {
+                m_pinLength = query.queryItems().at(i).second.toInt();
+            }
         }
 
         qDebug() << "Account:" << m_accountName;
         qDebug() << "Secret:" << m_secret;
         qDebug() << "Counter:" << m_counter;
+        qDebug() << "Timestep:" << m_timeStep;
+        qDebug() << "Pin length:" << m_pinLength;
 
         emit validChanged();
 

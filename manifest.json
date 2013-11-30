@@ -11,5 +11,5 @@
     "maintainer": "Michael Zanetti <michael.zanetti@canonical.com>",
     "name": "com.ubuntu.developer.mzanetti.ubuntu-authenticator",
     "title": "ubuntu-authenticator",
-    "version": "0.4.1"
+    "version": "0.5.0"
 }

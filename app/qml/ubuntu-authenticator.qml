@@ -136,17 +136,60 @@ MainView {
                             right: parent.right
                         }
                         fontSize: "x-large"
-                        text: accountDelegate.activated ? otp : ""
+                        text: accountDelegate.activated || type === Account.TypeTOTP ? otp : ""
                         Button {
                             anchors {
                                 left: parent.left
                                 right: parent.right
                             }
                             text: "Click here to generate a password"
-                            visible: !accountDelegate.activated
+                            visible: !accountDelegate.activated && type === Account.TypeHOTP
                             onClicked: {
                                 accounts.get(index).next()
                                 accountDelegate.activated = true
+                            }
+                        }
+                    }
+                    UbuntuShape {
+                        id: totpProgressBar
+                        width: parent.width
+                        height: units.gu(.5)
+                        color: "#000000"
+                        onWidthChanged: totpAnimation.startCountdown();
+                        visible: type === Account.TypeTOTP
+
+                        UbuntuShape {
+                            id: totpProgressBarFill
+                            anchors.fill: parent
+                            color: "#dd4814"
+                            NumberAnimation {
+                                id: totpAnimation
+                                duration: timeStep * 1000
+                                target: totpProgressBarFill
+                                property: "anchors.leftMargin"
+                                function startCountdown() {
+                                    stop();
+                                    duration = accounts.get(index).msecsToNext();
+                                    var progress = ((timeStep * 1000) - duration) / (timeStep * 1000)
+                                    to = totpProgressBar.width;
+                                    from = totpProgressBar.width * progress;
+                                    print("duration:", duration, progress, from, totpProgressBar.width)
+                                    start();
+                                }
+                            }
+                        }
+                    }
+                    Component.onCompleted: {
+                        if (type === Account.TypeTOTP) {
+                            totpAnimation.startCountdown()
+                        }
+                    }
+
+                    Connections {
+                        target: accounts.get(index)
+                        onOtpChanged: {
+                            if (type === Account.TypeTOTP) {
+                                totpAnimation.startCountdown()
                             }
                         }
                     }
@@ -159,10 +202,10 @@ MainView {
                         rightMargin: units.gu(2)
                         verticalCenter: parent.verticalCenter
                     }
-                    width: accountDelegate.activated ? units.gu(6) : 0
+                    width: type === Account.TypeHOTP && accountDelegate.activated ? units.gu(6) : 0
                     height: units.gu(6)
                     name: "reload"
-                    visible: accountDelegate.activated
+                    visible: accountDelegate.activated && type === Account.TypeHOTP
                     MouseArea {
                         anchors.fill: parent
                         onClicked: accounts.generateNext(index)
@@ -189,10 +232,12 @@ MainView {
                 }
 
                 newAccount.name = nameField.text
+                newAccount.type = typeSelector.selectedIndex == 1 ? Account.TypeTOTP : Account.TypeHOTP
                 newAccount.secret = secretField.text
                 newAccount.counter = parseInt(counterField.text)
+                newAccount.timeStep = parseInt(timeStepField.text)
                 newAccount.pinLength = parseInt(pinLengthField.text)
-                //print("account is", newAccount, newAccount.name, newAccount.secret, newAccount.counter, newAccount.pinLength)
+                print("account is", newAccount, newAccount.name, newAccount.secret, newAccount.counter, newAccount.pinLength, newAccount.timeStep)
             }
 
             __rightButton.enabled: nameField.text.length > 0 && secretField.text.length >= 16
@@ -234,6 +279,17 @@ MainView {
                     }
 
                     Label {
+                        text: "Type"
+                    }
+
+                    OptionSelector {
+                        id: typeSelector
+                        width: parent.width
+                        model: ["Counter based", "Time based"]
+                        selectedIndex: account && account.type === Account.TypeTOTP ? 1 : 0
+                    }
+
+                    Label {
                         text: "Key"
                     }
                     TextArea {
@@ -246,42 +302,54 @@ MainView {
                     }
                     Row {
                         width: parent.width
-                        property int cellWidth: (width - spacing) / 2
-                        spacing: units.gu(2)
-                        Row {
-                            width: parent.cellWidth
-                            spacing: units.gu(1)
+                        spacing: units.gu(1)
+                        visible: typeSelector.selectedIndex == 0
 
-                            Label {
-                                text: "Counter"
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-                            TextField {
-                                id: counterField
-                                text: account ? account.counter : 0
-                                width: parent.width - x
-                                inputMask: "0009"
-                            }
+                        Label {
+                            text: "Counter"
+                            anchors.verticalCenter: parent.verticalCenter
                         }
-                        Row {
-                            width: parent.cellWidth
-                            spacing: units.gu(1)
+                        TextField {
+                            id: counterField
+                            text: account ? account.counter : 0
+                            width: parent.width - x
+                            inputMask: "0009"
+                        }
+                    }
+                    Row {
+                        width: parent.width
+                        spacing: units.gu(1)
+                        visible: typeSelector.selectedIndex == 1
 
-                            Label {
-                                text: "Pin length"
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-                            TextField {
-                                id: pinLengthField
-                                text: account ? account.pinLength : 6
-                                width: parent.width - x
-                                inputMask: "0D"
-                            }
+                        Label {
+                            text: "Time step"
+                            anchors.verticalCenter: parent.verticalCenter
                         }
-                        Item {
-                            width: parent.width
-                            height: Qt.inputMethod.keyboardRectangle.height
+                        TextField {
+                            id: timeStepField
+                            text: account ? account.timeStep : 30
+                            width: parent.width - x
+                            inputMask: "0009"
                         }
+                    }
+                    Row {
+                        width: parent.width
+                        spacing: units.gu(1)
+
+                        Label {
+                            text: "Pin length"
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                        TextField {
+                            id: pinLengthField
+                            text: account ? account.pinLength : 6
+                            width: parent.width - x
+                            inputMask: "0D"
+                        }
+                    }
+                    Item {
+                        width: parent.width
+                        height: Qt.inputMethod.keyboardRectangle.height
                     }
                 }
             }
@@ -309,8 +377,11 @@ MainView {
                     if (valid) {
                         var account = accounts.createAccount();
                         account.name = qrCodeReader.accountName;
+                        account.type = qrCodeReader.type;
                         account.secret = qrCodeReader.secret;
                         account.counter = qrCodeReader.counter;
+                        account.timeStep = qrCodeReader.timeStep;
+                        account.pinLength = qrCodeReader.pinLength;
                         pageStack.pop();
                     }
                 }

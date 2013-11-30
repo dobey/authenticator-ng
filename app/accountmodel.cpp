@@ -44,13 +44,17 @@ AccountModel::AccountModel(QObject *parent) :
         settings.beginGroup(group);
         Account *account = new Account(id, this);
         account->setName(settings.value("account").toString());
+        account->setType(settings.value("type", "hotp").toString() == "totp" ? Account::TypeTOTP : Account::TypeHOTP);
         account->setSecret(settings.value("secret").toString());
         account->setCounter(settings.value("counter").toInt());
+        account->setTimeStep(settings.value("timeStep").toInt());
         account->setPinLength(settings.value("pinLength").toInt());
 
         connect(account, SIGNAL(nameChanged()), SLOT(accountChanged()));
+        connect(account, SIGNAL(typeChanged()), SLOT(accountChanged()));
         connect(account, SIGNAL(secretChanged()), SLOT(accountChanged()));
         connect(account, SIGNAL(counterChanged()), SLOT(accountChanged()));
+        connect(account, SIGNAL(timeStepChanged()), SLOT(accountChanged()));
         connect(account, SIGNAL(pinLengthChanged()), SLOT(accountChanged()));
         connect(account, SIGNAL(otpChanged()), SLOT(accountChanged()));
 
@@ -75,10 +79,14 @@ QVariant AccountModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case RoleName:
         return m_accounts.at(index.row())->name();
+    case RoleType:
+        return m_accounts.at(index.row())->type();
     case RoleSecret:
         return m_accounts.at(index.row())->secret();
     case RoleCounter:
         return m_accounts.at(index.row())->counter();
+    case RoleTimeStep:
+        return m_accounts.at(index.row())->timeStep();
     case RolePinLength:
         return m_accounts.at(index.row())->pinLength();
     case RoleOtp:
@@ -90,7 +98,10 @@ QVariant AccountModel::data(const QModelIndex &index, int role) const
 
 Account *AccountModel::get(int index) const
 {
-    return m_accounts.at(index);
+    if (index > -1 && m_accounts.count() > index) {
+        return m_accounts.at(index);
+    }
+    return 0;
 }
 
 Account *AccountModel::createAccount()
@@ -99,6 +110,7 @@ Account *AccountModel::createAccount()
     beginInsertRows(QModelIndex(), m_accounts.count(), m_accounts.count());
     m_accounts.append(account);
     connect(account, SIGNAL(nameChanged()), SLOT(accountChanged()));
+    connect(account, SIGNAL(typeChanged()), SLOT(accountChanged()));
     connect(account, SIGNAL(secretChanged()), SLOT(accountChanged()));
     connect(account, SIGNAL(counterChanged()), SLOT(accountChanged()));
     connect(account, SIGNAL(pinLengthChanged()), SLOT(accountChanged()));
@@ -112,17 +124,21 @@ Account *AccountModel::createAccount()
 
 void AccountModel::deleteAccount(int index)
 {
+    qDebug() << "starting deleteAccount" << index << m_accounts.count();
     beginRemoveRows(QModelIndex(), index, index);
 
     Account *account = m_accounts.takeAt(index);
+    qDebug() << "got account" << account;
     QSettings settings("com.ubuntu.developer.mzanetti.ubuntu-authenticator", "ubuntu-authenticator");
     settings.beginGroup(account->id().toString());
     settings.remove("");
     settings.endGroup();
 
+    qDebug() << "removed from settings";
     account->deleteLater();
 
     endRemoveRows();
+    qDebug() << "done with deleteAccount";
 }
 
 void AccountModel::deleteAccount(Account *account)
@@ -135,8 +151,10 @@ QHash<int, QByteArray> AccountModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles.insert(RoleName, "name");
+    roles.insert(RoleType, "type");
     roles.insert(RoleSecret, "secret");
     roles.insert(RoleCounter, "counter");
+    roles.insert(RoleTimeStep, "timeStep");
     roles.insert(RolePinLength, "pinLength");
     roles.insert(RoleOtp, "otp");
     return roles;
@@ -159,7 +177,7 @@ void AccountModel::accountChanged()
     Account *account = qobject_cast<Account*>(sender());
     storeAccount(account);
 
-    qDebug() << "account changed";
+//    qDebug() << "account changed";
     int accountIndex = m_accounts.indexOf(account);
     emit dataChanged(index(accountIndex), index(accountIndex));
 }
@@ -169,10 +187,12 @@ void AccountModel::storeAccount(Account *account)
     QSettings settings("com.ubuntu.developer.mzanetti.ubuntu-authenticator", "ubuntu-authenticator");
     settings.beginGroup(account->id().toString());
     settings.setValue("account", account->name());
+    settings.setValue("type", account->type() == Account::TypeTOTP ? "totp" : "hotp");
     settings.setValue("secret", account->secret());
     settings.setValue("counter", account->counter());
+    settings.setValue("timeStep", account->timeStep());
     settings.setValue("pinLength", account->pinLength());
     settings.endGroup();
-    qDebug() << "saved to" << settings.fileName();
+//    qDebug() << "saved to" << settings.fileName();
 
 }

@@ -21,6 +21,7 @@
 #include "account.h"
 
 #include <QDebug>
+#include <QDateTime>
 
 #define SIZE_MAX UINT_MAX
 extern "C" {
@@ -33,6 +34,8 @@ Account::Account(const QUuid &id, QObject *parent) :
     m_counter(0),
     m_pinLength(6)
 {
+    m_totpTimer.setSingleShot(true);
+    connect(&m_totpTimer, SIGNAL(timeout()), SLOT(generate()));
 }
 
 QUuid Account::id() const
@@ -50,6 +53,21 @@ void Account::setName(const QString &name)
     if (m_name != name) {
         m_name = name;
         emit nameChanged();
+    }
+}
+
+Account::Type Account::type() const
+{
+    return m_type;
+}
+
+void Account::setType(Account::Type type)
+{
+    if (m_type != type) {
+        m_type = type;
+        qDebug() << "setting type" << type;
+        emit typeChanged();
+        generate();
     }
 }
 
@@ -81,6 +99,20 @@ void Account::setCounter(quint64 counter)
     }
 }
 
+int Account::timeStep() const
+{
+    return m_timeStep;
+}
+
+void Account::setTimeStep(int timeStep)
+{
+    if (m_timeStep != timeStep) {
+        m_timeStep = timeStep;
+        emit timeStepChanged();
+        generate();
+    }
+}
+
 int Account::pinLength() const
 {
     return m_pinLength;
@@ -98,6 +130,17 @@ void Account::setPinLength(int pinLength)
 QString Account::otp() const
 {
     return m_otp;
+}
+
+qint64 Account::msecsToNext() const
+{
+    if (m_timeStep == 0) {
+        return 0;
+    }
+    qint64 now = QDateTime::currentMSecsSinceEpoch();
+    qint64 msecsSinceLast = now % (m_timeStep * 1000);
+    qint64 msecsToNext = (m_timeStep * 1000) - msecsSinceLast;
+    return msecsToNext;
 }
 
 void Account::next()
@@ -120,14 +163,34 @@ void Account::generate()
         return;
     }
 
+    if (m_type == TypeTOTP && m_timeStep == 0) {
+        qWarning() << "Time step is 0. Cannot generate totp";
+        return;
+    }
+
+    qDebug() << "generating for account" << m_name;
     QByteArray hexSecret = fromBase32(m_secret.toLatin1());
-    qDebug() << "hexSecret" << hexSecret;
-    char code[6];
-    oath_hotp_generate(hexSecret.data(), hexSecret.length(), m_counter, m_pinLength, false, OATH_HOTP_DYNAMIC_TRUNCATION, code);
+//    qDebug() << "hexSecret" << hexSecret;
+    char code[m_pinLength];
+    if (m_type == TypeHOTP) {
+        oath_hotp_generate(hexSecret.data(), hexSecret.length(), m_counter, m_pinLength, false, OATH_HOTP_DYNAMIC_TRUNCATION, code);
+    } else {
+        oath_totp_generate(hexSecret.data(), hexSecret.length(), QDateTime::currentDateTime().toTime_t(), m_timeStep, 0, m_pinLength, code);
+    }
 
     m_otp = QLatin1String(code);
-    //    qDebug() << "Generating secret" << m_name << m_secret << m_counter << m_pinLength << m_otp;
+    qDebug() << "Generating secret" << m_name << m_secret << m_counter << m_pinLength << m_otp << m_timeStep;
     emit otpChanged();
+
+    if (m_type == TypeTOTP) {
+
+        // QTimer tends to be a wee bit too early...
+        // let's just add half a sec to make sure we end up in
+        // the current time slot and avoid restarting timers in the ui
+        m_totpTimer.setInterval(msecsToNext() + 500);
+//        qDebug() << "restarting timer for" << m_name << m_totpTimer.interval() << msecsToNext << QDateTime::currentDateTime().toMSecsSinceEpoch();
+        m_totpTimer.start();
+    }
 
 }
 

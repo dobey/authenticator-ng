@@ -31,8 +31,10 @@ class AccountModel : public QAbstractListModel
 public:
     enum Roles {
         RoleName,
+        RoleType,
         RoleSecret,
         RoleCounter,
+        RoleTimeStep,
         RolePinLength,
         RoleOtp
     };
