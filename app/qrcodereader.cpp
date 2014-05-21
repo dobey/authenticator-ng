@@ -155,7 +155,7 @@ void QRCodeReader::handleResults(const QString &type, const QString &text)
 void Reader::doWork(const QImage &image)
 {
 
-    zbar::QZBarImage img(image);
+    zbar::QZBarImage img(image.convertToFormat(QImage::Format_RGB32));
     zbar::Image tmp = img.convert(*(long*)"Y800");
 
     // create a reader
