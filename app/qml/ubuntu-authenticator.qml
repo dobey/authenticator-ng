@@ -276,6 +276,7 @@ MainView {
                         text: account ? account.name : ""
                         placeholderText: "Enter the account name"
                         onTextChanged: print("bar", text)
+                        inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
                     }
 
                     Label {
@@ -299,6 +300,7 @@ MainView {
                         autoSize: true
                         wrapMode: Text.WrapAnywhere
                         placeholderText: "Enter the 16 or 32 digits key"
+                        inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
                     }
                     Row {
                         width: parent.width
