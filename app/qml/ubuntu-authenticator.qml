@@ -30,16 +30,12 @@ MainView {
 
     applicationName: "com.ubuntu.developer.mzanetti.ubuntu-authenticator"
 
-    //automaticOrientation: true
-
-    headerColor: "black"
-    backgroundColor: "black"
-//    footerColor: "white"
-
     width: units.gu(40)
     height: units.gu(68)
 
     useDeprecatedToolbar: false
+
+    Component.onCompleted: Theme.name = "Ubuntu.Components.Themes.SuruDark"
 
     PageStack {
         id: pageStack
@@ -54,8 +50,6 @@ MainView {
 
         head {
             actions: [
-                Action {},
-                Action {},
                 Action {
                     text: "Add account"
                     iconName: "add"
@@ -84,18 +78,24 @@ MainView {
         }
 
         Icon {
+            id: addHintIcon
             anchors {
                 right: parent.right
                 top: parent.top
-                topMargin: units.gu(3) + height
-                //rightMargin: units.gu(4)
+                rightMargin: units.gu(4)
             }
 
             width: units.gu(6)
             height: width
-            name: "keyboard-enter"
+            name: "keyboard-caps-enabled"
             visible: accountsListView.count == 0 && pageStack.depth == 1
-            rotation: 90
+
+            SequentialAnimation {
+                running: addHintIcon.visible
+                loops: Animation.Infinite
+                UbuntuNumberAnimation { target: addHintIcon; property: "anchors.topMargin"; from: units.gu(10); to: units.gu(14); duration: UbuntuAnimation.SleepyDuration }
+                UbuntuNumberAnimation { target: addHintIcon; property: "anchors.topMargin"; from: units.gu(14); to: units.gu(10); duration: UbuntuAnimation.SleepyDuration }
+            }
         }
 
         ListView {
@@ -104,21 +104,34 @@ MainView {
             model: accounts
             interactive: contentHeight > height - units.gu(6) //FIXME: -6gu because of the panel being locked to open
 
-            delegate: Empty {
+            delegate: ListItemWithActions {
                 id: accountDelegate
                 height: delegateColumn.height + units.gu(4)
-                removable: true
+                width: parent.width
 
                 property bool activated: false
 
-                onItemRemoved: {
-                    print("item removed:", accounts.get(index))
-                    var popup = PopupUtils.open(removeQuestionComponent, accountsListView, {account: accounts.get(index)})
-                    popup.accepted.connect(function() { accounts.deleteAccount(index); });
-                    popup.rejected.connect(function() { accounts.refresh(); });
+                leftSideAction: Action {
+                    iconName: "delete"
+                    text: i18n.tr("Delete")
+                    onTriggered: {
+                        var popup = PopupUtils.open(removeQuestionComponent, accountsListView, {account: accounts.get(index)})
+                        popup.accepted.connect(function() { accounts.deleteAccount(index); });
+                        popup.rejected.connect(function() { accounts.refresh(); });
+                    }
                 }
 
-                Column {
+                rightSideActions: [
+                    Action {
+                        iconName: "edit"
+                        text: i18n.tr("Edit")
+                        onTriggered: {
+                            pageStack.push(editSheetComponent, {account: accounts.get(index)})
+                        }
+                    }
+                ]
+
+                contents: Column {
                     id: delegateColumn
                     anchors {
                         top: parent.top
@@ -224,39 +237,18 @@ MainView {
                         onClicked: accounts.generateNext(index)
                     }
                 }
-
-                onPressAndHold: {
-                    pageStack.push(editSheetComponent, {account: accounts.get(index)})
-                }
-                Rectangle {
-                    anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
-                    height: units.dp(1)
-                    color: "white"
-                }
-                Rectangle {
-                    anchors { left: parent.left; right: parent.right; top: parent.top }
-                    height: units.dp(1)
-                    color: "white"
-                    visible: index == 0
-                }
             }
-
-
         }
     }
 
     Component {
         id: editSheetComponent
         Page {
-            title: "Add account"
+            title: account == null ? "Add account" : "Edit account"
 
             property QtObject account: null
 
             tools: ToolbarItems {
-                ToolbarButton {
-                    action: Action {
-                    }
-                }
                 ToolbarButton {
                     action: Action {
                         iconName: "tick"
@@ -280,99 +272,111 @@ MainView {
                 }
             }
 
-            Column {
-                id: settingsColumn
-                anchors {
-                    fill: parent
-                    margins: units.gu(2)
-                }
-                spacing: units.gu(2)
+            Flickable {
+                id: settingsFlickable
+                anchors.fill: parent
+                contentHeight: settingsColumn.height + settingsColumn.anchors.margins * 2
 
-                Label {
-                    text: "Name"
-                }
-                TextField {
-                    id: nameField
-                    width: parent.width
-                    text: account ? account.name : ""
-                    placeholderText: "Enter the account name"
-                    onTextChanged: print("bar", text)
-                }
-
-                Label {
-                    text: "Type"
-                }
-
-                OptionSelector {
-                    id: typeSelector
-                    width: parent.width
-                    model: ["Counter based", "Time based"]
-                    selectedIndex: account && account.type === Account.TypeTOTP ? 1 : 0
-                }
-
-                Label {
-                    text: "Key"
-                }
-                TextArea {
-                    id: secretField
-                    width: parent.width
-                    text: account ? account.secret : ""
-                    autoSize: true
-                    wrapMode: Text.WrapAnywhere
-                    placeholderText: "Enter the 16 or 32 digits key"
-                }
-                Row {
-                    width: parent.width
-                    spacing: units.gu(1)
-                    visible: typeSelector.selectedIndex == 0
+                Column {
+                    id: settingsColumn
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        top: parent.top
+                        margins: units.gu(2)
+                    }
+                    spacing: units.gu(2)
 
                     Label {
-                        text: "Counter"
-                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Name"
                     }
                     TextField {
-                        id: counterField
-                        text: account ? account.counter : 0
-                        width: parent.width - x
-                        inputMask: "0009"
+                        id: nameField
+                        width: parent.width
+                        text: account ? account.name : ""
+                        placeholderText: "Enter the account name"
+                        onTextChanged: print("bar", text)
                     }
-                }
-                Row {
-                    width: parent.width
-                    spacing: units.gu(1)
-                    visible: typeSelector.selectedIndex == 1
 
                     Label {
-                        text: "Time step"
-                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Type"
                     }
-                    TextField {
-                        id: timeStepField
-                        text: account ? account.timeStep : 30
-                        width: parent.width - x
-                        inputMask: "0009"
+
+                    OptionSelector {
+                        id: typeSelector
+                        width: parent.width
+                        model: ["Counter based", "Time based"]
+                        selectedIndex: account && account.type === Account.TypeTOTP ? 1 : 0
                     }
-                }
-                Row {
-                    width: parent.width
-                    spacing: units.gu(1)
 
                     Label {
-                        text: "Pin length"
-                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Key"
                     }
-                    TextField {
-                        id: pinLengthField
-                        text: account ? account.pinLength : 6
-                        width: parent.width - x
-                        inputMask: "0D"
+                    TextArea {
+                        id: secretField
+                        width: parent.width
+                        text: account ? account.secret : ""
+                        autoSize: true
+                        wrapMode: Text.WrapAnywhere
+                        placeholderText: "Enter the 16 or 32 digits key"
                     }
-                }
-                Item {
-                    width: parent.width
-                    height: Qt.inputMethod.keyboardRectangle.height
+                    Row {
+                        width: parent.width
+                        spacing: units.gu(1)
+                        visible: typeSelector.selectedIndex == 0
+
+                        Label {
+                            text: "Counter"
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                        TextField {
+                            id: counterField
+                            text: account ? account.counter : 0
+                            width: parent.width - x
+                            inputMask: "0009"
+                            inputMethodHints: Qt.ImhDigitsOnly
+                        }
+                    }
+                    Row {
+                        width: parent.width
+                        spacing: units.gu(1)
+                        visible: typeSelector.selectedIndex == 1
+
+                        Label {
+                            text: "Time step"
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                        TextField {
+                            id: timeStepField
+                            text: account ? account.timeStep : 30
+                            width: parent.width - x
+                            inputMask: "0009"
+                            inputMethodHints: Qt.ImhDigitsOnly
+                        }
+                    }
+                    Row {
+                        width: parent.width
+                        spacing: units.gu(1)
+
+                        Label {
+                            text: "Pin length"
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                        TextField {
+                            id: pinLengthField
+                            text: account ? account.pinLength : 6
+                            width: parent.width - x
+                            inputMask: "0D"
+                            inputMethodHints: Qt.ImhDigitsOnly
+                        }
+                    }
+                    Item {
+                        width: parent.width
+                        height: Qt.inputMethod.keyboardRectangle.height
+                    }
                 }
             }
+
         }
     }
 
@@ -512,6 +516,7 @@ MainView {
                     PopupUtils.close(removeQuestionDialog);
                     removeQuestionDialog.accepted();
                 }
+                color: UbuntuColors.green
             }
             Button {
                 text: qsTr("Cancel")
@@ -519,6 +524,7 @@ MainView {
                     PopupUtils.close(removeQuestionDialog);
                     removeQuestionDialog.rejected();
                 }
+                color: UbuntuColors.red
             }
         }
     }
