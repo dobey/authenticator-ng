@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<QRCodeReader>("OAth", 1, 0, "QRCodeReader");
 
     view.setResizeMode(QQuickView::SizeRootObjectToView);
-    view.setSource(QUrl::fromLocalFile(QApplication::applicationDirPath() + "/qml/ubuntu-authenticator.qml"));
+    view.setSource(QUrl("qrc:///qml/ubuntu-authenticator.qml"));
     view.show();
 
     return a.exec();
