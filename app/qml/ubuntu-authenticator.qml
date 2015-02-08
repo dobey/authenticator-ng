@@ -19,9 +19,9 @@
  ****************************************************************************/
 
 import QtQuick 2.0
-import Ubuntu.Components 0.1
-import Ubuntu.Components.ListItems 0.1
-import Ubuntu.Components.Popups 0.1
+import Ubuntu.Components 1.1
+import Ubuntu.Components.ListItems 1.0
+import Ubuntu.Components.Popups 1.0
 import OAth 1.0
 import QtMultimedia 5.0
 import QtQuick.Window 2.0
@@ -33,58 +33,69 @@ MainView {
     //automaticOrientation: true
 
     headerColor: "black"
-    backgroundColor: "#555555"
-    footerColor: "#888888"
+    backgroundColor: "black"
+//    footerColor: "white"
 
     width: units.gu(40)
     height: units.gu(68)
+
+    useDeprecatedToolbar: false
 
     PageStack {
         id: pageStack
 
         Component.onCompleted: pageStack.push(mainPage)
-
     }
+
     Page {
         id: mainPage
         title: "Authenticator"
         visible: false
 
-        tools: ToolbarItems {
-            opened: true
-            locked: true
-            ToolbarButton {
-                id: addButton
-                text: "Add"
-                iconSource: "image://theme/add"
-                onTriggered: {
-                    PopupUtils.open(addMenuComponent, addButton)
+        head {
+            actions: [
+                Action {},
+                Action {},
+                Action {
+                    text: "Add account"
+                    iconName: "add"
+                    onTriggered: {
+                        pageStack.push(editSheetComponent)
+                    }
+                },
+                Action {
+                    text: "Scan QR code"
+                    iconName: "camera-symbolic"
+                    onTriggered: {
+                        pageStack.push(grabCodeComponent)
+                    }
                 }
-            }
+            ]
         }
 
         Label {
             anchors.centerIn: parent
             width: parent.width - units.gu(4)
-            text: "No accounts set up.\nPlease add an account using the \"Add\" button."
+            text: "No account set up. Use the buttons in the toolbar to add accounts."
             wrapMode: Text.WordWrap
             fontSize: "large"
             horizontalAlignment: Text.AlignHCenter
-            visible: accountsListView.count == 0
+            visible: accountsListView.count == 0 && pageStack.depth == 1
         }
 
         Icon {
             anchors {
                 right: parent.right
-                bottom: parent.bottom
-                margins: units.gu(1)
+                top: parent.top
+                topMargin: units.gu(3) + height
+                //rightMargin: units.gu(4)
             }
 
-            width: units.gu(10)
+            width: units.gu(6)
             height: width
-            rotation: -90
-            name: "keyboard-return"
-            visible: accountsListView.count == 0
+            name: "keyboard-enter"
+            visible: accountsListView.count == 0 && pageStack.depth == 1
+            rotation: 90
         }
 
         ListView {
@@ -144,6 +155,7 @@ MainView {
                             }
                             text: "Click here to generate a password"
                             visible: !accountDelegate.activated && type === Account.TypeHOTP
+                            color: UbuntuColors.green
                             onClicked: {
                                 accounts.get(index).next()
                                 accountDelegate.activated = true
@@ -161,7 +173,8 @@ MainView {
                         UbuntuShape {
                             id: totpProgressBarFill
                             anchors.fill: parent
-                            color: "#dd4814"
+                            color: UbuntuColors.green
+
                             NumberAnimation {
                                 id: totpAnimation
                                 duration: timeStep * 1000
@@ -173,7 +186,6 @@ MainView {
                                     var progress = ((timeStep * 1000) - duration) / (timeStep * 1000)
                                     to = totpProgressBar.width;
                                     from = totpProgressBar.width * progress;
-                                    print("duration:", duration, progress, from, totpProgressBar.width)
                                     start();
                                 }
                             }
@@ -206,6 +218,7 @@ MainView {
                     height: units.gu(6)
                     name: "reload"
                     visible: accountDelegate.activated && type === Account.TypeHOTP
+                    color: UbuntuColors.green
                     MouseArea {
                         anchors.fill: parent
                         onClicked: accounts.generateNext(index)
@@ -213,144 +226,151 @@ MainView {
                 }
 
                 onPressAndHold: {
-                    PopupUtils.open(editSheetComponent, mainPage, {account: accounts.get(index)})
+                    pageStack.push(editSheetComponent, {account: accounts.get(index)})
+                }
+                Rectangle {
+                    anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
+                    height: units.dp(1)
+                    color: "white"
+                }
+                Rectangle {
+                    anchors { left: parent.left; right: parent.right; top: parent.top }
+                    height: units.dp(1)
+                    color: "white"
+                    visible: index == 0
                 }
             }
+
+
         }
     }
 
     Component {
         id: editSheetComponent
-        ComposerSheet {
+        Page {
+            title: "Add account"
 
             property QtObject account: null
 
-            onConfirmClicked: {
-                var newAccount = account;
-                if (newAccount == null) {
-                    newAccount = accounts.createAccount()
-                }
-
-                newAccount.name = nameField.text
-                newAccount.type = typeSelector.selectedIndex == 1 ? Account.TypeTOTP : Account.TypeHOTP
-                newAccount.secret = secretField.text
-                newAccount.counter = parseInt(counterField.text)
-                newAccount.timeStep = parseInt(timeStepField.text)
-                newAccount.pinLength = parseInt(pinLengthField.text)
-                print("account is", newAccount, newAccount.name, newAccount.secret, newAccount.counter, newAccount.pinLength, newAccount.timeStep)
-            }
-
-            __rightButton.enabled: nameField.text.length > 0 && secretField.text.length >= 16
-
-            Component.onCompleted: {
-                __foreground.__styleInstance.headerColor = "#333333"
-                __foreground.__styleInstance.backgroundColor = "#222222"
-            }
-
-            Flickable {
-                anchors {
-                    left: parent.left
-                    top: parent.top
-                    right: parent.right
-                    bottom: parent.bottom
-                    leftMargin: units.gu(2)
-                    rightMargin: units.gu(2)
-                }
-                contentHeight: settingsColumn.height
-                clip: true
-
-                Column {
-                    id: settingsColumn
-                    anchors {
-                        left: parent.left
-                        right: parent.right
+            tools: ToolbarItems {
+                ToolbarButton {
+                    action: Action {
                     }
-                    spacing: units.gu(2)
+                }
+                ToolbarButton {
+                    action: Action {
+                        iconName: "tick"
+                        enabled: nameField.text.length > 0 && secretField.text.length >= 16
+                        onTriggered: {
+                            var newAccount = account;
+                            if (newAccount == null) {
+                                newAccount = accounts.createAccount()
+                            }
+
+                            newAccount.name = nameField.text
+                            newAccount.type = typeSelector.selectedIndex == 1 ? Account.TypeTOTP : Account.TypeHOTP
+                            newAccount.secret = secretField.text
+                            newAccount.counter = parseInt(counterField.text)
+                            newAccount.timeStep = parseInt(timeStepField.text)
+                            newAccount.pinLength = parseInt(pinLengthField.text)
+                            print("account is", newAccount, newAccount.name, newAccount.secret, newAccount.counter, newAccount.pinLength, newAccount.timeStep)
+                            pageStack.pop();
+                        }
+                    }
+                }
+            }
+
+            Column {
+                id: settingsColumn
+                anchors {
+                    fill: parent
+                    margins: units.gu(2)
+                }
+                spacing: units.gu(2)
+
+                Label {
+                    text: "Name"
+                }
+                TextField {
+                    id: nameField
+                    width: parent.width
+                    text: account ? account.name : ""
+                    placeholderText: "Enter the account name"
+                    onTextChanged: print("bar", text)
+                }
+
+                Label {
+                    text: "Type"
+                }
+
+                OptionSelector {
+                    id: typeSelector
+                    width: parent.width
+                    model: ["Counter based", "Time based"]
+                    selectedIndex: account && account.type === Account.TypeTOTP ? 1 : 0
+                }
+
+                Label {
+                    text: "Key"
+                }
+                TextArea {
+                    id: secretField
+                    width: parent.width
+                    text: account ? account.secret : ""
+                    autoSize: true
+                    wrapMode: Text.WrapAnywhere
+                    placeholderText: "Enter the 16 or 32 digits key"
+                }
+                Row {
+                    width: parent.width
+                    spacing: units.gu(1)
+                    visible: typeSelector.selectedIndex == 0
 
                     Label {
-                        text: "Name"
+                        text: "Counter"
+                        anchors.verticalCenter: parent.verticalCenter
                     }
                     TextField {
-                        id: nameField
-                        width: parent.width
-                        text: account ? account.name : ""
-                        placeholderText: "Enter the account name"
-                        onTextChanged: print("bar", text)
+                        id: counterField
+                        text: account ? account.counter : 0
+                        width: parent.width - x
+                        inputMask: "0009"
                     }
+                }
+                Row {
+                    width: parent.width
+                    spacing: units.gu(1)
+                    visible: typeSelector.selectedIndex == 1
 
                     Label {
-                        text: "Type"
+                        text: "Time step"
+                        anchors.verticalCenter: parent.verticalCenter
                     }
-
-                    OptionSelector {
-                        id: typeSelector
-                        width: parent.width
-                        model: ["Counter based", "Time based"]
-                        selectedIndex: account && account.type === Account.TypeTOTP ? 1 : 0
+                    TextField {
+                        id: timeStepField
+                        text: account ? account.timeStep : 30
+                        width: parent.width - x
+                        inputMask: "0009"
                     }
+                }
+                Row {
+                    width: parent.width
+                    spacing: units.gu(1)
 
                     Label {
-                        text: "Key"
+                        text: "Pin length"
+                        anchors.verticalCenter: parent.verticalCenter
                     }
-                    TextArea {
-                        id: secretField
-                        width: parent.width
-                        text: account ? account.secret : ""
-                        autoSize: true
-                        wrapMode: Text.WrapAnywhere
-                        placeholderText: "Enter the 16 or 32 digits key"
+                    TextField {
+                        id: pinLengthField
+                        text: account ? account.pinLength : 6
+                        width: parent.width - x
+                        inputMask: "0D"
                     }
-                    Row {
-                        width: parent.width
-                        spacing: units.gu(1)
-                        visible: typeSelector.selectedIndex == 0
-
-                        Label {
-                            text: "Counter"
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                        TextField {
-                            id: counterField
-                            text: account ? account.counter : 0
-                            width: parent.width - x
-                            inputMask: "0009"
-                        }
-                    }
-                    Row {
-                        width: parent.width
-                        spacing: units.gu(1)
-                        visible: typeSelector.selectedIndex == 1
-
-                        Label {
-                            text: "Time step"
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                        TextField {
-                            id: timeStepField
-                            text: account ? account.timeStep : 30
-                            width: parent.width - x
-                            inputMask: "0009"
-                        }
-                    }
-                    Row {
-                        width: parent.width
-                        spacing: units.gu(1)
-
-                        Label {
-                            text: "Pin length"
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                        TextField {
-                            id: pinLengthField
-                            text: account ? account.pinLength : 6
-                            width: parent.width - x
-                            inputMask: "0D"
-                        }
-                    }
-                    Item {
-                        width: parent.width
-                        height: Qt.inputMethod.keyboardRectangle.height
-                    }
+                }
+                Item {
+                    width: parent.width
+                    height: Qt.inputMethod.keyboardRectangle.height
                 }
             }
         }
@@ -364,11 +384,7 @@ MainView {
         id: grabCodeComponent
         Page {
             id: grabCodePage
-
-            tools: ToolbarItems {
-                opened: true
-                locked: true
-            }
+            title: "Scan code"
 
             QRCodeReader {
                 id: qrCodeReader
@@ -413,7 +429,6 @@ MainView {
             VideoOutput {
                 anchors {
                     fill: parent
-                    topMargin: units.gu(8)
                 }
                 fillMode: Image.PreserveAspectCrop
                 orientation: device.naturalOrientation === "portrait"  ? -90 : 0
@@ -455,16 +470,12 @@ MainView {
 
                 Repeater {
                     model: ListModel {
-                        ListElement { text: "Add manually"; icon: "edit" }
-                        ListElement { text: "Scan QR-Code"; icon: "camera-symbolic" }
+                        ListElement { text: "Add manually"; icon: "image://theme/edit" }
+                        ListElement { text: "Scan QR-Code"; icon: "/usr/share/icons/ubuntu-mobile/apps/symbolic/camera-symbolic.svg" }
                     }
                     delegate: Standard {
                         text: model.text
-                        icon: Icon {
-                            name: model.icon
-                            height: parent.height
-                            width: height
-                        }
+                        iconSource: model.icon
 
                         onClicked: {
                             switch (index) {

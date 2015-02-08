@@ -76,7 +76,8 @@ build_click_package() {
 }
 
 run() {
-    exec_with_ssh "cd $CODE_DIR/$BUILD_DIR/app && QML2_IMPORT_PATH=../plugin ./$BINARY --desktop_file_hint=$CODE_DIR/ubuntu-authenticator.desktop"
+#    exec_with_ssh "cd $CODE_DIR/$BUILD_DIR/app && QML2_IMPORT_PATH=../plugin ./$BINARY --desktop_file_hint=$CODE_DIR/ubuntu-authenticator.desktop"
+    exec_with_ssh "cd $CODE_DIR/$BUILD_DIR/app && QML2_IMPORT_PATH=../plugin ./$BINARY --desktop_file_hint=/usr/share/applications/dialer-app.desktop"
 }
 
 set -- `getopt -n$0 -u -a --longoptions="setup,gdb,click,help" "sgch" "$@"`
