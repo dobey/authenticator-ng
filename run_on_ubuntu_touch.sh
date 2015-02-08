@@ -72,10 +72,12 @@ build_click_package() {
     exec_with_ssh cp $CODE_DIR/ubuntu-authenticator.desktop $CODE_DIR/$BUILD_DIR/install
     exec_with_ssh cp $CODE_DIR/ubuntu-authenticator.svg $CODE_DIR/$BUILD_DIR/install
     exec_with_ssh click build $CODE_DIR/$BUILD_DIR/install
+    scp -P 2222 phablet@localhost:/home/phablet/com.*authenticator*click .
 }
 
 run() {
-    exec_with_ssh "cd $CODE_DIR/$BUILD_DIR/app && QML2_IMPORT_PATH=../plugin ./$BINARY --desktop_file_hint=/usr/share/applications/camera-app.desktop"
+#    exec_with_ssh "cd $CODE_DIR/$BUILD_DIR/app && QML2_IMPORT_PATH=../plugin ./$BINARY --desktop_file_hint=$CODE_DIR/ubuntu-authenticator.desktop"
+    exec_with_ssh "cd $CODE_DIR/$BUILD_DIR/app && QML2_IMPORT_PATH=../plugin ./$BINARY --desktop_file_hint=/usr/share/applications/dialer-app.desktop"
 }
 
 set -- `getopt -n$0 -u -a --longoptions="setup,gdb,click,help" "sgch" "$@"`
