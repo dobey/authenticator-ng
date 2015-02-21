@@ -24,15 +24,15 @@
 
 #include <QSettings>
 #include <QStringList>
-#include <QDebug>
+//#include <QDebug>
 
 AccountModel::AccountModel(QObject *parent) :
     QAbstractListModel(parent)
 {
     QSettings settings("com.ubuntu.developer.mzanetti.ubuntu-authenticator", "ubuntu-authenticator");
-    qDebug() << "loading settings file:" << settings.fileName();
+//    qDebug() << "loading settings file:" << settings.fileName();
     foreach(const QString & group, settings.childGroups()) {
-        qDebug() << "found group" << group << QUuid(group).toString();
+//        qDebug() << "found group" << group << QUuid(group).toString();
 
         QUuid id = QUuid(group);
         bool migrateAccount = false;
@@ -124,21 +124,21 @@ Account *AccountModel::createAccount()
 
 void AccountModel::deleteAccount(int index)
 {
-    qDebug() << "starting deleteAccount" << index << m_accounts.count();
+//    qDebug() << "starting deleteAccount" << index << m_accounts.count();
     beginRemoveRows(QModelIndex(), index, index);
 
     Account *account = m_accounts.takeAt(index);
-    qDebug() << "got account" << account;
+//    qDebug() << "got account" << account;
     QSettings settings("com.ubuntu.developer.mzanetti.ubuntu-authenticator", "ubuntu-authenticator");
     settings.beginGroup(account->id().toString());
     settings.remove("");
     settings.endGroup();
 
-    qDebug() << "removed from settings";
+//    qDebug() << "removed from settings";
     account->deleteLater();
 
     endRemoveRows();
-    qDebug() << "done with deleteAccount";
+//    qDebug() << "done with deleteAccount";
 }
 
 void AccountModel::deleteAccount(Account *account)

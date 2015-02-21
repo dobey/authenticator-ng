@@ -25,7 +25,7 @@
 
 #include <QGuiApplication>
 #include <QWindow>
-#include <QDebug>
+//#include <QDebug>
 #include <QUrlQuery>
 
 QRCodeReader::QRCodeReader(QObject *parent) :
@@ -93,7 +93,7 @@ void QRCodeReader::grab()
 
     QImage img = m_mainWindow->grabWindow();
 
-    qDebug() << "got image" << img.size();
+//    qDebug() << "got image" << img.size();
 
     Reader *reader = new Reader;
     reader->moveToThread(&m_readerThread);
@@ -106,12 +106,12 @@ void QRCodeReader::grab()
 
 void QRCodeReader::handleResults(const QString &type, const QString &text)
 {
-    qDebug() << "parsed:" << type << text;
+//    qDebug() << "parsed:" << type << text;
 
     if (type == "QR-Code" && text.startsWith(QStringLiteral("otpauth://"))) {
         QUrl url(text);
 
-        qDebug() << url.host() << url.path() << url.query() << url.authority();
+//        qDebug() << url.host() << url.path() << url.query() << url.authority();
 
         m_type = Account::TypeHOTP;
         if (url.host() == "totp") {
@@ -140,11 +140,11 @@ void QRCodeReader::handleResults(const QString &type, const QString &text)
             }
         }
 
-        qDebug() << "Account:" << m_accountName;
-        qDebug() << "Secret:" << m_secret;
-        qDebug() << "Counter:" << m_counter;
-        qDebug() << "Timestep:" << m_timeStep;
-        qDebug() << "Pin length:" << m_pinLength;
+//        qDebug() << "Account:" << m_accountName;
+//        qDebug() << "Secret:" << m_secret;
+//        qDebug() << "Counter:" << m_counter;
+//        qDebug() << "Timestep:" << m_timeStep;
+//        qDebug() << "Pin length:" << m_pinLength;
 
         emit validChanged();
 
@@ -166,7 +166,7 @@ void Reader::doWork(const QImage &image)
 
     // scan the image for barcodes
     int n = scanner.scan(tmp);
-    qDebug() << "scanner ret" << n;
+//    qDebug() << "scanner ret" << n;
 
     img.set_symbols(tmp.get_symbols());
 
@@ -178,7 +178,7 @@ void Reader::doWork(const QImage &image)
         QString typeName = QString::fromStdString(symbol->get_type_name());
         QString symbolString = QString::fromStdString(symbol->get_data());
 
-        qDebug() << "Code recognized:" << typeName << ", Text:" << symbolString;
+//        qDebug() << "Code recognized:" << typeName << ", Text:" << symbolString;
 
         emit resultReady(typeName, symbolString);
     }

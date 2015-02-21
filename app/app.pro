@@ -2,6 +2,8 @@ TARGET = ubuntu-authenticator
 
 QT += quick widgets
 
+#load Ubuntu specific features
+load(ubuntu-click)
 
 INCLUDEPATH += ../plugin/OAth
 INCLUDEPATH += /usr/include/zbar/
@@ -23,7 +25,8 @@ RESOURCES += \
 
 
 # Install files into the click package
-target.path = /
+message("installing to $${UBUNTU_CLICK_BINARY_PATH}")
+target.path = $${UBUNTU_CLICK_BINARY_PATH}
 icon.files = ../ubuntu-authenticator.svg
 icon.path = /
 desktopfile.files = ../ubuntu-authenticator.desktop

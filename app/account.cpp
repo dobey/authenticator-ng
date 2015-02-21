@@ -20,7 +20,7 @@
 
 #include "account.h"
 
-#include <QDebug>
+//#include <QDebug>
 #include <QDateTime>
 
 #define SIZE_MAX UINT_MAX
@@ -65,7 +65,7 @@ void Account::setType(Account::Type type)
 {
     if (m_type != type) {
         m_type = type;
-        qDebug() << "setting type" << type;
+//        qDebug() << "setting type" << type;
         emit typeChanged();
         generate();
     }
@@ -146,7 +146,7 @@ qint64 Account::msecsToNext() const
 void Account::next()
 {
     m_counter++;
-    qDebug() << "emitting changed";
+//    qDebug() << "emitting changed";
     emit counterChanged();
     generate();
 }
@@ -154,21 +154,21 @@ void Account::next()
 void Account::generate()
 {
     if (m_secret.isEmpty()) {
-        qWarning() << "No secret set. Cannot generate otp.";
+//        qWarning() << "No secret set. Cannot generate otp.";
         return;
     }
 
     if (m_pinLength <= 0) {
-        qWarning() << "Pin length is" << m_pinLength << ". Cannot generate otp.";
+//        qWarning() << "Pin length is" << m_pinLength << ". Cannot generate otp.";
         return;
     }
 
     if (m_type == TypeTOTP && m_timeStep == 0) {
-        qWarning() << "Time step is 0. Cannot generate totp";
+//        qWarning() << "Time step is 0. Cannot generate totp";
         return;
     }
 
-    qDebug() << "generating for account" << m_name;
+//    qDebug() << "generating for account" << m_name;
     QByteArray hexSecret = fromBase32(m_secret.toLatin1());
 //    qDebug() << "hexSecret" << hexSecret;
     char code[m_pinLength];
@@ -179,7 +179,7 @@ void Account::generate()
     }
 
     m_otp = QLatin1String(code);
-    qDebug() << "Generating secret" << m_name << m_secret << m_counter << m_pinLength << m_otp << m_timeStep;
+//    qDebug() << "Generating secret" << m_name << m_secret << m_counter << m_pinLength << m_otp << m_timeStep;
     emit otpChanged();
 
     if (m_type == TypeTOTP) {
