@@ -32,6 +32,7 @@ Account::Account(const QUuid &id, QObject *parent) :
     QObject(parent),
     m_id(id),
     m_counter(0),
+    m_timeStep(30),
     m_pinLength(6)
 {
     m_totpTimer.setSingleShot(true);
@@ -134,7 +135,7 @@ QString Account::otp() const
 
 qint64 Account::msecsToNext() const
 {
-    if (m_timeStep == 0) {
+    if (m_timeStep <= 0) {
         return 0;
     }
     qint64 now = QDateTime::currentMSecsSinceEpoch();
@@ -163,7 +164,7 @@ void Account::generate()
         return;
     }
 
-    if (m_type == TypeTOTP && m_timeStep == 0) {
+    if (m_type == TypeTOTP && m_timeStep <= 0) {
 //        qWarning() << "Time step is 0. Cannot generate totp";
         return;
     }
