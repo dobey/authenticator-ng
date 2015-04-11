@@ -4,7 +4,7 @@ load(ubuntu-click)
 
 SUBDIRS += app
 
-UBUNTU_TRANSLATION_DOMAIN="com.ubuntu.developer.mzanetti.ubuntu-authenticator"
+UBUNTU_TRANSLATION_DOMAIN="authenticator"
 
 UBUNTU_TRANSLATION_SOURCES+= \
     $$files(app/*.qml,true) \
