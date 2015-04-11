@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-11 02:48+0200\n"
+"POT-Creation-Date: 2015-04-11 03:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:54
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:247
 msgid "Add account"
 msgstr ""
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:61
 msgid "Scan QR code"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:73
+msgid "No account set up. Use the buttons in the toolbar to add accounts."
 msgstr ""
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:116
@@ -33,12 +38,32 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:169
+msgid "Click here to generate a password"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:247
+msgid "Edit account"
+msgstr ""
+
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:291
 msgid "Name"
 msgstr ""
 
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:297
+msgid "Enter the account name"
+msgstr ""
+
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:302
 msgid "Type"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:308
+msgid "Counter based"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:308
+msgid "Time based"
 msgstr ""
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:313
@@ -47,6 +72,10 @@ msgstr ""
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:321
 msgid "Enter the 16 or 32 digits key"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:329
+msgid "Counter"
 msgstr ""
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:346
@@ -65,15 +94,19 @@ msgstr ""
 msgid "Scan a QR-Code containing account information"
 msgstr ""
 
-#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:506
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:469
+msgid "Remove account?"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:470
 #, qt-format
 msgid "Are you sure you want to remove %1?"
 msgstr ""
 
-#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:514
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:478
 msgid "Yes"
 msgstr ""
 
-#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:522
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:486
 msgid "Cancel"
 msgstr ""

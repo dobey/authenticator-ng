@@ -70,7 +70,7 @@ MainView {
         Label {
             anchors.centerIn: parent
             width: parent.width - units.gu(4)
-            text: "No account set up. Use the buttons in the toolbar to add accounts."
+            text: i18n.tr("No account set up. Use the buttons in the toolbar to add accounts.")
             wrapMode: Text.WordWrap
             fontSize: "large"
             horizontalAlignment: Text.AlignHCenter
@@ -166,7 +166,7 @@ MainView {
                                 left: parent.left
                                 right: parent.right
                             }
-                            text: "Click here to generate a password"
+                            text: i18n.tr("Click here to generate a password")
                             visible: !accountDelegate.activated && type === Account.TypeHOTP
                             color: UbuntuColors.green
                             onClicked: {
@@ -244,7 +244,7 @@ MainView {
     Component {
         id: editSheetComponent
         Page {
-            title: account == null ? "Add account" : "Edit account"
+            title: account == null ? i18n.tr("Add account") : i18n.tr("Edit account")
 
             property QtObject account: null
 
@@ -294,7 +294,7 @@ MainView {
                         id: nameField
                         width: parent.width
                         text: account ? account.name : ""
-                        placeholderText: "Enter the account name"
+                        placeholderText: i18n.tr("Enter the account name")
                         onTextChanged: print("bar", text)
                     }
 
@@ -305,7 +305,7 @@ MainView {
                     OptionSelector {
                         id: typeSelector
                         width: parent.width
-                        model: ["Counter based", "Time based"]
+                        model: [i18n.tr("Counter based"), i18n.tr("Time based")]
                         selectedIndex: account && account.type === Account.TypeTOTP ? 1 : 0
                     }
 
@@ -326,7 +326,7 @@ MainView {
                         visible: typeSelector.selectedIndex == 0
 
                         Label {
-                            text: "Counter"
+                            text: i18n.tr("Counter")
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         TextField {
@@ -463,46 +463,10 @@ MainView {
     }
 
     Component {
-        id: addMenuComponent
-        Popover {
-            id: addMenuPopover
-            height: menuColumn.height
-            Column {
-                id: menuColumn
-                width: parent.width
-                height: childrenRect.height
-
-                Repeater {
-                    model: ListModel {
-                        ListElement { text: "Add manually"; icon: "image://theme/edit" }
-                        ListElement { text: "Scan QR-Code"; icon: "/usr/share/icons/ubuntu-mobile/apps/symbolic/camera-symbolic.svg" }
-                    }
-                    delegate: Standard {
-                        text: model.text
-                        iconSource: model.icon
-
-                        onClicked: {
-                            switch (index) {
-                            case 0:
-                                PopupUtils.open(editSheetComponent, mainPage)
-                                break;
-                            case 1:
-                                pageStack.push(grabCodeComponent)
-                                break
-                            }
-                            PopupUtils.close(addMenuPopover)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    Component {
         id: removeQuestionComponent
         Dialog {
             id: removeQuestionDialog
-            title: "Remove account?"
+            title: i18n.tr("Remove account?")
             text: i18n.tr("Are you sure you want to remove %1?").arg(account.name)
 
             property QtObject account
