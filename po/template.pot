@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-11 03:31+0200\n"
+"POT-Creation-Date: 2015-04-11 03:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,6 +23,7 @@ msgid "Add account"
 msgstr ""
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:61
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:394
 msgid "Scan QR code"
 msgstr ""
 
@@ -40,7 +41,7 @@ msgstr ""
 
 #. TRANSLATORS: Text on a button
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:170
-msgid "Generate a password"
+msgid "Generate PIN"
 msgstr ""
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:248
@@ -85,15 +86,11 @@ msgid "Time step"
 msgstr ""
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:365
-msgid "Pin length"
-msgstr ""
-
-#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:394
-msgid "Scan code"
+msgid "PIN length"
 msgstr ""
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:453
-msgid "Scan a QR-Code containing account information"
+msgid "Scan a QR Code containing account information"
 msgstr ""
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:472

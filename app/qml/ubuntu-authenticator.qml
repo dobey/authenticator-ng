@@ -167,7 +167,7 @@ MainView {
                                 right: parent.right
                             }
                             // TRANSLATORS: Text on a button
-                            text: i18n.tr("Generate a password")
+                            text: i18n.tr("Generate PIN")
                             visible: !accountDelegate.activated && type === Account.TypeHOTP
                             color: UbuntuColors.green
                             onClicked: {
@@ -362,7 +362,7 @@ MainView {
                         spacing: units.gu(1)
 
                         Label {
-                            text: i18n.tr("Pin length")
+                            text: i18n.tr("PIN length")
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         TextField {
@@ -391,7 +391,7 @@ MainView {
         id: grabCodeComponent
         Page {
             id: grabCodePage
-            title: i18n.tr("Scan code")
+            title: i18n.tr("Scan QR code")
 
             QRCodeReader {
                 id: qrCodeReader
@@ -450,7 +450,7 @@ MainView {
                     right: parent.right
                     margins: units.gu(1)
                 }
-                text: i18n.tr("Scan a QR-Code containing account information")
+                text: i18n.tr("Scan a QR Code containing account information")
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
                 fontSize: "large"
