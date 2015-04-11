@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-11 03:21+0200\n"
+"POT-Creation-Date: 2015-04-11 03:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,39 +74,39 @@ msgstr ""
 msgid "Enter the 16 or 32 digits key"
 msgstr ""
 
-#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:329
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:330
 msgid "Counter"
 msgstr ""
 
-#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:346
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:347
 msgid "Time step"
 msgstr ""
 
-#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:362
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:363
 msgid "Pin length"
 msgstr ""
 
-#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:391
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:392
 msgid "Scan code"
 msgstr ""
 
-#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:450
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:451
 msgid "Scan a QR-Code containing account information"
 msgstr ""
 
-#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:469
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:470
 msgid "Remove account?"
 msgstr ""
 
-#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:470
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:471
 #, qt-format
 msgid "Are you sure you want to remove %1?"
 msgstr ""
 
-#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:478
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:479
 msgid "Yes"
 msgstr ""
 
-#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:486
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:487
 msgid "Cancel"
 msgstr ""
