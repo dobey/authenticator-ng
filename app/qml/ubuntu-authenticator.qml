@@ -166,7 +166,8 @@ MainView {
                                 left: parent.left
                                 right: parent.right
                             }
-                            text: i18n.tr("Click here to generate a password")
+                            // TRANSLATORS: Text on a button
+                            text: i18n.tr("Generate a password")
                             visible: !accountDelegate.activated && type === Account.TypeHOTP
                             color: UbuntuColors.green
                             onClicked: {
@@ -318,6 +319,7 @@ MainView {
                         text: account ? account.secret : ""
                         autoSize: true
                         wrapMode: Text.WrapAnywhere
+                        // TRANSLATORS: placeholder text in key textfield
                         placeholderText: i18n.tr("Enter the 16 or 32 digits key")
                         inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
                     }
