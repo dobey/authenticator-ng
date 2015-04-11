@@ -1,0 +1,122 @@
+# German translation for authenticator
+# Copyright (c) 2015 Rosetta Contributors and Canonical Ltd 2015
+# This file is distributed under the same license as the authenticator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: authenticator\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-04-11 03:36+0200\n"
+"PO-Revision-Date: 2015-04-11 01:43+0000\n"
+"Last-Translator: Michael Zanetti <michael.zanetti@canonical.com>\n"
+"Language-Team: German <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2015-04-11 05:51+0000\n"
+"X-Generator: Launchpad (build 17423)\n"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:54
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:248
+msgid "Add account"
+msgstr "Konto hinzufügen"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:61
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:394
+msgid "Scan QR code"
+msgstr "QR Code scannen"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:73
+msgid "No account set up. Use the buttons in the toolbar to add accounts."
+msgstr ""
+"Kein Konto eingerichtet. Benutzen Sie die Schaltflächen in der Titelleiste "
+"um Konten einzurichten."
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:116
+msgid "Delete"
+msgstr "Löschen"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:127
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#. TRANSLATORS: Text on a button
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:170
+msgid "Generate PIN"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:248
+msgid "Edit account"
+msgstr "Konto bearbeiten"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:292
+msgid "Name"
+msgstr "Name"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:298
+msgid "Enter the account name"
+msgstr "Kontonamen eingeben"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:303
+msgid "Type"
+msgstr "Typ"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:309
+msgid "Counter based"
+msgstr "Zählerbasiert"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:309
+msgid "Time based"
+msgstr "Zeitbasiert"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:314
+msgid "Key"
+msgstr "Schlüssel"
+
+#. TRANSLATORS: placeholder text in key textfield
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:323
+msgid "Enter the 16 or 32 digits key"
+msgstr "16 oder 32 stelligen Schlüssel eingeben"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:332
+msgid "Counter"
+msgstr "Zähler"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:349
+msgid "Time step"
+msgstr "Zeitintervall"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:365
+msgid "PIN length"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:453
+msgid "Scan a QR Code containing account information"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:472
+msgid "Remove account?"
+msgstr "Konto entfernen?"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:473
+#, qt-format
+msgid "Are you sure you want to remove %1?"
+msgstr "Sind Sie sicher, dass Sie %1 löschen wollen?"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:481
+msgid "Yes"
+msgstr "Ja"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:489
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#~ msgid "Pin length"
+#~ msgstr "PIN Länge"
+
+#~ msgid "Scan code"
+#~ msgstr "Code scannen"
+
+#~ msgid "Scan a QR-Code containing account information"
+#~ msgstr "Scannen Sie einen QR-Code mit Kontoinformationen"
