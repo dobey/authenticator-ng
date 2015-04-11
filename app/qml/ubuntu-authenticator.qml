@@ -51,14 +51,14 @@ MainView {
         head {
             actions: [
                 Action {
-                    text: "Add account"
+                    text: i18n.tr("Add account")
                     iconName: "add"
                     onTriggered: {
                         pageStack.push(editSheetComponent)
                     }
                 },
                 Action {
-                    text: "Scan QR code"
+                    text: i18n.tr("Scan QR code")
                     iconName: "camera-symbolic"
                     onTriggered: {
                         pageStack.push(grabCodeComponent)
@@ -288,7 +288,7 @@ MainView {
                     spacing: units.gu(2)
 
                     Label {
-                        text: "Name"
+                        text: i18n.tr("Name")
                     }
                     TextField {
                         id: nameField
@@ -299,7 +299,7 @@ MainView {
                     }
 
                     Label {
-                        text: "Type"
+                        text: i18n.tr("Type")
                     }
 
                     OptionSelector {
@@ -310,7 +310,7 @@ MainView {
                     }
 
                     Label {
-                        text: "Key"
+                        text: i18n.tr("Key")
                     }
                     TextArea {
                         id: secretField
@@ -318,7 +318,7 @@ MainView {
                         text: account ? account.secret : ""
                         autoSize: true
                         wrapMode: Text.WrapAnywhere
-                        placeholderText: "Enter the 16 or 32 digits key"
+                        placeholderText: i18n.tr("Enter the 16 or 32 digits key")
                     }
                     Row {
                         width: parent.width
@@ -343,7 +343,7 @@ MainView {
                         visible: typeSelector.selectedIndex == 1
 
                         Label {
-                            text: "Time step"
+                            text: i18n.tr("Time step")
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         TextField {
@@ -359,7 +359,7 @@ MainView {
                         spacing: units.gu(1)
 
                         Label {
-                            text: "Pin length"
+                            text: i18n.tr("Pin length")
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         TextField {
@@ -388,7 +388,7 @@ MainView {
         id: grabCodeComponent
         Page {
             id: grabCodePage
-            title: "Scan code"
+            title: i18n.tr("Scan code")
 
             QRCodeReader {
                 id: qrCodeReader
@@ -447,7 +447,7 @@ MainView {
                     right: parent.right
                     margins: units.gu(1)
                 }
-                text: "Scan a QR-Code containing account information"
+                text: i18n.tr("Scan a QR-Code containing account information")
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
                 fontSize: "large"
@@ -503,7 +503,7 @@ MainView {
         Dialog {
             id: removeQuestionDialog
             title: "Remove account?"
-            text: qsTr("Are you sure you want to remove %1?").arg(account.name)
+            text: i18n.tr("Are you sure you want to remove %1?").arg(account.name)
 
             property QtObject account
 
@@ -511,7 +511,7 @@ MainView {
             signal rejected()
 
             Button {
-                text: qsTr("Yes")
+                text: i18n.tr("Yes")
                 onClicked: {
                     PopupUtils.close(removeQuestionDialog);
                     removeQuestionDialog.accepted();
@@ -519,7 +519,7 @@ MainView {
                 color: UbuntuColors.green
             }
             Button {
-                text: qsTr("Cancel")
+                text: i18n.tr("Cancel")
                 onClicked: {
                     PopupUtils.close(removeQuestionDialog);
                     removeQuestionDialog.rejected();

@@ -24,13 +24,13 @@
 
 #include <QSettings>
 #include <QStringList>
-//#include <QDebug>
+#include <QDebug>
 
 AccountModel::AccountModel(QObject *parent) :
     QAbstractListModel(parent)
 {
     QSettings settings("com.ubuntu.developer.mzanetti.ubuntu-authenticator", "ubuntu-authenticator");
-//    qDebug() << "loading settings file:" << settings.fileName();
+    qDebug() << "loading settings file:" << settings.fileName();
     foreach(const QString & group, settings.childGroups()) {
 //        qDebug() << "found group" << group << QUuid(group).toString();
 

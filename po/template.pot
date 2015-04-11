@@ -1,0 +1,79 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-11 02:48+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:54
+msgid "Add account"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:61
+msgid "Scan QR code"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:116
+msgid "Delete"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:127
+msgid "Edit"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:291
+msgid "Name"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:302
+msgid "Type"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:313
+msgid "Key"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:321
+msgid "Enter the 16 or 32 digits key"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:346
+msgid "Time step"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:362
+msgid "Pin length"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:391
+msgid "Scan code"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:450
+msgid "Scan a QR-Code containing account information"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:506
+#, qt-format
+msgid "Are you sure you want to remove %1?"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:514
+msgid "Yes"
+msgstr ""
+
+#: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:522
+msgid "Cancel"
+msgstr ""
