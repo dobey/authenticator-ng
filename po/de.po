@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: authenticator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-04-11 03:36+0200\n"
-"PO-Revision-Date: 2015-04-11 01:43+0000\n"
+"PO-Revision-Date: 2015-04-12 14:10+0000\n"
 "Last-Translator: Michael Zanetti <michael.zanetti@canonical.com>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-04-12 06:02+0000\n"
+"X-Launchpad-Export-Date: 2015-04-13 05:43+0000\n"
 "X-Generator: Launchpad (build 17423)\n"
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:54
@@ -44,7 +44,7 @@ msgstr "Bearbeiten"
 #. TRANSLATORS: Text on a button
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:170
 msgid "Generate PIN"
-msgstr ""
+msgstr "PIN generieren"
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:248
 msgid "Edit account"
@@ -89,11 +89,11 @@ msgstr "Zeitintervall"
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:365
 msgid "PIN length"
-msgstr ""
+msgstr "PIN länge"
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:453
 msgid "Scan a QR Code containing account information"
-msgstr ""
+msgstr "Scannen Sie einen QR-Code mit Kontoinformationen"
 
 #: /home/mzanetti/Develop/ubuntu-authenticator/app/qml/ubuntu-authenticator.qml:472
 msgid "Remove account?"
