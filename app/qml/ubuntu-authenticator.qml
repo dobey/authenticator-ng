@@ -320,7 +320,7 @@ MainView {
                         autoSize: true
                         wrapMode: Text.WrapAnywhere
                         // TRANSLATORS: placeholder text in key textfield
-                        placeholderText: i18n.tr("Enter the 16 or 32 digits key")
+                        placeholderText: i18n.tr("Enter the 16 or 32 digit key")
                         inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
                     }
                     Row {
