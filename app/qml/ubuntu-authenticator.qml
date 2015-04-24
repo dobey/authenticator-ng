@@ -35,7 +35,10 @@ MainView {
 
     useDeprecatedToolbar: false
 
-    Component.onCompleted: Theme.name = "Ubuntu.Components.Themes.SuruDark"
+    Component.onCompleted: {
+        Theme.name = "Ubuntu.Components.Themes.SuruDark"
+        i18n.domain = "authenticator"
+    }
 
     PageStack {
         id: pageStack
