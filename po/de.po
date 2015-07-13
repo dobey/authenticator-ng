@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: authenticator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-04-23 21:36+0200\n"
-"PO-Revision-Date: 2015-06-13 23:07+0000\n"
-"Last-Translator: Michael Zanetti <michael.zanetti@canonical.com>\n"
+"PO-Revision-Date: 2015-07-12 18:05+0000\n"
+"Last-Translator: Tobias Bannert <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-06-14 05:44+0000\n"
-"X-Generator: Launchpad (build 17557)\n"
+"X-Launchpad-Export-Date: 2015-07-13 05:37+0000\n"
+"X-Generator: Launchpad (build 17620)\n"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:57
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:251
@@ -30,8 +30,8 @@ msgstr "QR-Code scannen"
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:76
 msgid "No account set up. Use the buttons in the toolbar to add accounts."
 msgstr ""
-"Kein Konto eingerichtet. Benutzen Sie die Schaltflächen in der Titelleiste "
-"um Konten einzurichten."
+"Kein Konto eingerichtet. Bitte die Knöpfe in der Titelleiste benutzen, um "
+"Konten hinzuzufügen."
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:119
 msgid "Delete"
@@ -44,7 +44,7 @@ msgstr "Bearbeiten"
 #. TRANSLATORS: Text on a button
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:173
 msgid "Generate PIN"
-msgstr "PIN generieren"
+msgstr "PIN erstellen"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:251
 msgid "Edit account"
@@ -77,7 +77,7 @@ msgstr "Schlüssel"
 #. TRANSLATORS: placeholder text in key textfield
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:326
 msgid "Enter the 16 or 32 digit key"
-msgstr "Geben Sie den 16 oder 32 stelligen Schlüssel ein"
+msgstr "Bitte den 16- oder 32-stelligen Schlüssel eingeben"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:335
 msgid "Counter"
@@ -89,11 +89,11 @@ msgstr "Zeitintervall"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:368
 msgid "PIN length"
-msgstr "PIN länge"
+msgstr "PIN-Länge"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:456
 msgid "Scan a QR Code containing account information"
-msgstr "Scannen Sie einen QR-Code mit Kontoinformationen"
+msgstr "Einen QR-Code mit Kontoinformationen einlesen"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:475
 msgid "Remove account?"
@@ -102,7 +102,7 @@ msgstr "Konto entfernen?"
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:476
 #, qt-format
 msgid "Are you sure you want to remove %1?"
-msgstr "Sind Sie sicher, dass Sie %1 löschen wollen?"
+msgstr "Sind Sie sicher, dass Sie %1 entfernen wollen?"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:484
 msgid "Yes"
