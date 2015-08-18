@@ -164,6 +164,53 @@ MainView {
                         }
                         fontSize: "x-large"
                         text: accountDelegate.activated || type === Account.TypeTOTP ? otp : ""
+
+                        AbstractButton {
+                            id: copyArea
+                            anchors {
+                                left: parent.left
+                                bottom: parent.bottom
+                            }
+                            width: parent.contentWidth
+                            height: parent.contentHeight
+                            action: Action {
+                                onTriggered: {
+                                    codeMIME.text = otpLabel.text;
+                                    Clipboard.push(codeMIME);
+                                    PopupUtils.open(copiedPopover, copyArea);
+                                }
+                            }
+
+                            MimeData {
+                                id: codeMIME
+                            }
+
+                            Component {
+                                id: copiedPopover
+                                Popover {
+                                    id: popover
+                                    contentWidth: copyArea.width - units.gu(4)
+                                    contentHeight: units.gu(4)
+                                    Label {
+                                        anchors {
+                                            fill: parent
+                                            margins: units.gu(1)
+                                        }
+                                        horizontalAlignment: Text.AlignHCenter
+                                        color: UbuntuColors.coolGrey
+                                        text: i18n.tr("Copied")
+                                        fontSize: "x-small"
+                                    }
+
+                                    Timer {
+                                        interval: 3000; running: true;
+                                        onTriggered: popover.hide()
+                                    }
+
+                                }
+                            }
+                        }
+
                         Button {
                             anchors {
                                 left: parent.left
