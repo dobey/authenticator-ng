@@ -44,6 +44,10 @@ msgstr ""
 msgid "Generate PIN"
 msgstr ""
 
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:198
+msgid "Copied"
+msgstr ""
+
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:251
 msgid "Edit account"
 msgstr ""
