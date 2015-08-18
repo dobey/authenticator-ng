@@ -166,7 +166,7 @@ MainView {
                         text: accountDelegate.activated || type === Account.TypeTOTP ? otp : ""
 
                         AbstractButton {
-                            id: copyArea
+                            id: copy
                             anchors {
                                 left: parent.left
                                 bottom: parent.bottom
@@ -175,22 +175,19 @@ MainView {
                             height: parent.contentHeight
                             action: Action {
                                 onTriggered: {
-                                    codeMIME.text = otpLabel.text;
-                                    Clipboard.push(codeMIME);
-                                    PopupUtils.open(copiedPopover, copyArea);
+                                    Clipboard.push(["text/plain", otpLabel.text]);
+                                    PopupUtils.open(copiedPopover, copy);
                                 }
-                            }
-
-                            MimeData {
-                                id: codeMIME
                             }
 
                             Component {
                                 id: copiedPopover
+
                                 Popover {
                                     id: popover
-                                    contentWidth: copyArea.width - units.gu(4)
+                                    contentWidth: copy.width - units.gu(4)
                                     contentHeight: units.gu(4)
+
                                     Label {
                                         anchors {
                                             fill: parent
@@ -206,7 +203,6 @@ MainView {
                                         interval: 3000; running: true;
                                         onTriggered: popover.hide()
                                     }
-
                                 }
                             }
                         }
