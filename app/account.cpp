@@ -20,7 +20,7 @@
 
 #include "account.h"
 
-//#include <QDebug>
+#include <QDebug>
 #include <QDateTime>
 
 #define SIZE_MAX UINT_MAX

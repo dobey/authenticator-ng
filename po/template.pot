@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 22:00+0200\n"
+"POT-Creation-Date: 2015-09-10 00:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,103 +17,103 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:56
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:311
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:58
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:339
 msgid "Add account"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:63
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:457
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:65
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:485
 msgid "Scan QR code"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:75
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:77
 msgid "No account set up. Use the buttons in the toolbar to add accounts."
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:120
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:123
 msgid "Delete"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:134
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:137
 msgid "Copy"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:142
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:145
 msgid "Edit"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:170
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:173
 msgid "Copied"
 msgstr ""
 
 #. TRANSLATORS: Text on a button
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:233
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:240
 msgid "Generate PIN"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:311
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:339
 msgid "Edit account"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:355
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:383
 msgid "Name"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:361
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:389
 msgid "Enter the account name"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:366
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:394
 msgid "Type"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:372
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:400
 msgid "Counter based"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:372
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:400
 msgid "Time based"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:377
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:405
 msgid "Key"
 msgstr ""
 
 #. TRANSLATORS: placeholder text in key textfield
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:386
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:414
 msgid "Enter the 16 or 32 digit key"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:395
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:423
 msgid "Counter"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:412
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:440
 msgid "Time step"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:428
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:456
 msgid "PIN length"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:516
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:544
 msgid "Scan a QR Code containing account information"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:535
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:563
 msgid "Remove account?"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:536
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:564
 #, qt-format
 msgid "Are you sure you want to remove %1?"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:544
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:572
 msgid "Yes"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:552
+#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:580
 msgid "Cancel"
 msgstr ""

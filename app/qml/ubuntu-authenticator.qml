@@ -18,7 +18,8 @@
  *                                                                           *
  ****************************************************************************/
 
-import QtQuick 2.0
+import QtQuick 2.4
+import QtQuick.Layouts 1.1
 import Ubuntu.Components 1.3
 import Ubuntu.Components.ListItems 1.3
 import Ubuntu.Components.Popups 1.3
@@ -27,6 +28,7 @@ import QtMultimedia 5.0
 import QtQuick.Window 2.0
 
 MainView {
+    id: root
 
     applicationName: "com.ubuntu.developer.mzanetti.ubuntu-authenticator"
 
@@ -108,9 +110,10 @@ MainView {
 
             delegate: ListItem {
                 id: accountDelegate
-                height: delegateColumn.height + units.gu(4)
+                height: compactLayout ? units.gu(6) : units.gu(12)
                 width: parent.width
 
+                property bool compactLayout: accountsListView.count * units.gu(12) > accountsListView.height
                 property bool activated: false
 
                 leadingActions: ListItemActions {
@@ -178,36 +181,38 @@ MainView {
                     }
                 }
 
-                Column {
+                GridLayout {
                     id: delegateColumn
                     anchors {
                         top: parent.top
                         left: parent.left
                         right: parent.right
                         leftMargin: units.gu(2)
-                        topMargin: units.gu(2)
-                        rightMargin: refreshButton.width + units.gu(2)
+                        topMargin: accountDelegate.compactLayout ? 0 : units.gu(2)
+                        rightMargin: refreshButton.width + units.gu(2) + (refreshButton.visible ? units.gu(1) : 0)
                     }
-                    spacing: units.gu(1)
-                    height: childrenRect.height
+                    rowSpacing: units.gu(1)
+                    columnSpacing: units.gu(1)
+                    height: parent.height - anchors.topMargin * 2
+                    columns: accountDelegate.compactLayout ? 2 : 1
 
                     Label {
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                        }
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
                         text: name
                         elide: Text.ElideRight
+                        verticalAlignment: Text.AlignVCenter
                     }
 
                     Label {
                         id: otpLabel
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                        }
+                        Layout.fillHeight: true
+                        Layout.preferredWidth: accountDelegate.compactLayout
+                                               ? accountDelegate.activated || type === Account.TypeTOTP ? otpLabel.contentWidth : units.gu(16)
+                                               : delegateColumn.width
                         fontSize: "x-large"
                         text: accountDelegate.activated || type === Account.TypeTOTP ? otp : ""
+                        verticalAlignment: Text.AlignVCenter
 
                         AbstractButton {
                             id: copy
@@ -228,7 +233,9 @@ MainView {
                             anchors {
                                 left: parent.left
                                 right: parent.right
+                                verticalCenter: parent.verticalCenter
                             }
+
                             // TRANSLATORS: Text on a button
                             text: i18n.tr("Generate PIN")
                             visible: !accountDelegate.activated && type === Account.TypeHOTP
@@ -239,66 +246,87 @@ MainView {
                             }
                         }
                     }
-                    UbuntuShape {
-                        id: totpProgressBar
-                        width: parent.width
-                        height: units.gu(.5)
-                        backgroundColor: "#000000"
-                        onWidthChanged: totpAnimation.startCountdown();
-                        visible: type === Account.TypeTOTP
-
-                        UbuntuShape {
-                            id: totpProgressBarFill
-                            anchors.fill: parent
-                            backgroundColor: UbuntuColors.green
-
-                            NumberAnimation {
-                                id: totpAnimation
-                                duration: timeStep * 1000
-                                target: totpProgressBarFill
-                                property: "anchors.leftMargin"
-                                function startCountdown() {
-                                    stop();
-                                    duration = accounts.get(index).msecsToNext();
-                                    var progress = ((timeStep * 1000) - duration) / (timeStep * 1000)
-                                    to = totpProgressBar.width;
-                                    from = totpProgressBar.width * progress;
-                                    start();
-                                }
-                            }
-                        }
-                    }
-                    Component.onCompleted: {
-                        if (type === Account.TypeTOTP) {
-                            totpAnimation.startCountdown()
-                        }
-                    }
-
-                    Connections {
-                        target: accounts.get(index)
-                        onOtpChanged: {
-                            if (type === Account.TypeTOTP) {
-                                totpAnimation.startCountdown()
-                            }
-                        }
-                    }
                 }
 
-                Icon {
+                Item {
                     id: refreshButton
                     anchors {
                         right: parent.right
                         rightMargin: units.gu(2)
                         verticalCenter: parent.verticalCenter
                     }
-                    width: type === Account.TypeHOTP && accountDelegate.activated ? units.gu(6) : 0
-                    height: units.gu(6)
-                    name: "reload"
-                    visible: accountDelegate.activated && type === Account.TypeHOTP
-                    color: UbuntuColors.green
-                    MouseArea {
+                    width: type === Account.TypeHOTP && !accountDelegate.activated ? 0 : height
+                    height: accountDelegate.compactLayout ? units.gu(4) : units.gu(6)
+                    visible: accountDelegate.activated || type == Account.TypeTOTP
+
+                    Icon {
                         anchors.fill: parent
-                        onClicked: accounts.generateNext(index)
+                        name: "reload"
+                        visible: accountDelegate.activated && type === Account.TypeHOTP
+                        color: UbuntuColors.green
+                        AbstractButton {
+                            anchors.fill: parent
+                            onClicked: accounts.generateNext(index)
+                        }
+                    }
+
+                    Item {
+                        id: progressCircle
+                        anchors.fill: parent
+                        anchors.margins: units.dp(4)
+                        visible: type == Account.TypeTOTP
+                        property real progress: 0
+
+                        Timer {
+                            interval: 100
+                            running: type === Account.TypeTOTP
+                            repeat: true
+                            onTriggered: {
+                                var duration = accounts.get(index).msecsToNext();
+                                progressCircle.progress = ((timeStep * 1000) - duration) / (timeStep * 1000)
+                            }
+                        }
+
+                        Canvas {
+                            id: canvas
+                            anchors.fill: parent
+                            rotation: -90
+
+                            property real progress: progressCircle.progress
+                            onProgressChanged: {
+                                canvas.requestPaint()
+                            }
+
+                            onPaint: {
+                                var ctx = canvas.getContext("2d");
+                                ctx.save();
+                                ctx.reset();
+                                var data = [1 - progress, progress];
+                                var myTotal = 0;
+                                var myColor = [UbuntuColors.green, root.backgroundColor];
+
+                                for(var e = 0; e < data.length; e++) {
+                                    myTotal += data[e];
+                                }
+
+                                ctx.fillStyle = UbuntuColors.green
+                                ctx.strokeStyle = UbuntuColors.green
+                                ctx.lineWidth = units.dp(2);
+
+                                ctx.beginPath();
+                                ctx.moveTo(canvas.width/2,canvas.height/2);
+                                ctx.arc(canvas.width/2,canvas.height/2,canvas.height/2,0,(Math.PI*2*((1-progress)/myTotal)),false);
+                                ctx.lineTo(canvas.width/2,canvas.height/2);
+                                ctx.fill();
+                                ctx.closePath();
+                                ctx.beginPath();
+                                ctx.arc(canvas.width/2,canvas.height/2,canvas.height/2 - units.dp(1),0,Math.PI*2,false);
+                                ctx.closePath();
+                                ctx.stroke();
+
+                                ctx.restore();
+                            }
+                        }
                     }
                 }
             }
