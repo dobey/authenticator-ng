@@ -130,6 +130,14 @@ MainView {
                 trailingActions: ListItemActions {
                     actions: [
                         Action {
+                            iconName: "edit-copy"
+                            text: i18n.tr("Copy")
+                            visible: accountDelegate.activated || type === Account.TypeTOTP
+                            onTriggered: {
+                                accountDelegate.copyToClipBoard()
+                            }
+                        },
+                        Action {
                             iconName: "edit"
                             text: i18n.tr("Edit")
                             onTriggered: {
@@ -137,6 +145,37 @@ MainView {
                             }
                         }
                     ]
+                }
+
+                function copyToClipBoard() {
+                    Clipboard.push(["text/plain", otpLabel.text]);
+                    PopupUtils.open(copiedPopover, copy)
+                }
+
+                Component {
+                    id: copiedPopover
+
+                    Popover {
+                        id: popover
+                        contentWidth: copy.width - units.gu(4)
+                        contentHeight: units.gu(4)
+
+                        Label {
+                            anchors {
+                                fill: parent
+                                margins: units.gu(1)
+                            }
+                            horizontalAlignment: Text.AlignHCenter
+                            color: UbuntuColors.coolGrey
+                            text: i18n.tr("Copied")
+                            fontSize: "x-small"
+                        }
+
+                        Timer {
+                            interval: 3000; running: true;
+                            onTriggered: popover.hide()
+                        }
+                    }
                 }
 
                 Column {
@@ -180,34 +219,7 @@ MainView {
                             height: parent.contentHeight
                             action: Action {
                                 onTriggered: {
-                                    Clipboard.push(["text/plain", otpLabel.text]);
-                                    PopupUtils.open(copiedPopover, copy);
-                                }
-                            }
-
-                            Component {
-                                id: copiedPopover
-
-                                Popover {
-                                    id: popover
-                                    contentWidth: copy.width - units.gu(4)
-                                    contentHeight: units.gu(4)
-
-                                    Label {
-                                        anchors {
-                                            fill: parent
-                                            margins: units.gu(1)
-                                        }
-                                        horizontalAlignment: Text.AlignHCenter
-                                        color: UbuntuColors.coolGrey
-                                        text: i18n.tr("Copied")
-                                        fontSize: "x-small"
-                                    }
-
-                                    Timer {
-                                        interval: 3000; running: true;
-                                        onTriggered: popover.hide()
-                                    }
+                                    accountDelegate.copyToClipBoard()
                                 }
                             }
                         }
