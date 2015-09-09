@@ -19,9 +19,9 @@
  ****************************************************************************/
 
 import QtQuick 2.0
-import Ubuntu.Components 1.1
-import Ubuntu.Components.ListItems 1.0
-import Ubuntu.Components.Popups 1.0
+import Ubuntu.Components 1.3
+import Ubuntu.Components.ListItems 1.3
+import Ubuntu.Components.Popups 1.3
 import OAth 1.0
 import QtMultimedia 5.0
 import QtQuick.Window 2.0
@@ -33,10 +33,9 @@ MainView {
     width: units.gu(40)
     height: units.gu(68)
 
-    useDeprecatedToolbar: false
+    theme.name: "Ubuntu.Components.Themes.SuruDark"
 
     Component.onCompleted: {
-        Theme.name = "Ubuntu.Components.Themes.SuruDark"
         i18n.domain = "authenticator"
     }
 
@@ -107,34 +106,40 @@ MainView {
             model: accounts
             interactive: contentHeight > height - units.gu(6) //FIXME: -6gu because of the panel being locked to open
 
-            delegate: ListItemWithActions {
+            delegate: ListItem {
                 id: accountDelegate
                 height: delegateColumn.height + units.gu(4)
                 width: parent.width
 
                 property bool activated: false
 
-                leftSideAction: Action {
-                    iconName: "delete"
-                    text: i18n.tr("Delete")
-                    onTriggered: {
-                        var popup = PopupUtils.open(removeQuestionComponent, accountsListView, {account: accounts.get(index)})
-                        popup.accepted.connect(function() { accounts.deleteAccount(index); });
-                        popup.rejected.connect(function() { accounts.refresh(); });
-                    }
+                leadingActions: ListItemActions {
+                    actions: [
+                        Action {
+                            iconName: "delete"
+                            text: i18n.tr("Delete")
+                            onTriggered: {
+                                var popup = PopupUtils.open(removeQuestionComponent, accountsListView, {account: accounts.get(index)})
+                                popup.accepted.connect(function() { accounts.deleteAccount(index); });
+                                popup.rejected.connect(function() { accounts.refresh(); });
+                            }
+                        }
+                    ]
                 }
 
-                rightSideActions: [
-                    Action {
-                        iconName: "edit"
-                        text: i18n.tr("Edit")
-                        onTriggered: {
-                            pageStack.push(editSheetComponent, {account: accounts.get(index)})
+                trailingActions: ListItemActions {
+                    actions: [
+                        Action {
+                            iconName: "edit"
+                            text: i18n.tr("Edit")
+                            onTriggered: {
+                                pageStack.push(editSheetComponent, {account: accounts.get(index)})
+                            }
                         }
-                    }
-                ]
+                    ]
+                }
 
-                contents: Column {
+                Column {
                     id: delegateColumn
                     anchors {
                         top: parent.top
@@ -226,14 +231,14 @@ MainView {
                         id: totpProgressBar
                         width: parent.width
                         height: units.gu(.5)
-                        color: "#000000"
+                        backgroundColor: "#000000"
                         onWidthChanged: totpAnimation.startCountdown();
                         visible: type === Account.TypeTOTP
 
                         UbuntuShape {
                             id: totpProgressBarFill
                             anchors.fill: parent
-                            color: UbuntuColors.green
+                            backgroundColor: UbuntuColors.green
 
                             NumberAnimation {
                                 id: totpAnimation
@@ -295,9 +300,9 @@ MainView {
 
             property QtObject account: null
 
-            tools: ToolbarItems {
-                ToolbarButton {
-                    action: Action {
+            head {
+                actions: [
+                Action {
                         iconName: "tick"
                         enabled: nameField.text.length > 0 && secretField.text.length >= 16
                         onTriggered: {
@@ -316,7 +321,7 @@ MainView {
                             pageStack.pop();
                         }
                     }
-                }
+                ]
             }
 
             Flickable {
