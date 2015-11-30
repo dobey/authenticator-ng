@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: authenticator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-09-10 00:34+0200\n"
-"PO-Revision-Date: 2015-04-21 10:30+0000\n"
-"Last-Translator: Víctor R. Ruiz <Unknown>\n"
+"PO-Revision-Date: 2015-11-29 15:22+0000\n"
+"Last-Translator: Ricardo A. Hermosilla Carrillo <ra.hermosillac@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-09-10 06:17+0000\n"
-"X-Generator: Launchpad (build 17706)\n"
+"X-Launchpad-Export-Date: 2015-11-30 05:31+0000\n"
+"X-Generator: Launchpad (build 17850)\n"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:58
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:339
@@ -39,7 +39,7 @@ msgstr "Borrar"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:137
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:145
 msgid "Edit"
@@ -47,7 +47,7 @@ msgstr "Editar"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:173
 msgid "Copied"
-msgstr ""
+msgstr "Copiado"
 
 #. TRANSLATORS: Text on a button
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:240
