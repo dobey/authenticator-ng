@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: authenticator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-09-10 00:34+0200\n"
-"PO-Revision-Date: 2015-04-21 21:40+0000\n"
-"Last-Translator: José Carlos Casimiro <Unknown>\n"
+"PO-Revision-Date: 2015-12-02 19:29+0000\n"
+"Last-Translator: Ivo Xavier <ivofernandes12@gmail.com>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-09-10 06:17+0000\n"
-"X-Generator: Launchpad (build 17706)\n"
+"X-Launchpad-Export-Date: 2015-12-03 06:11+0000\n"
+"X-Generator: Launchpad (build 17856)\n"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:58
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:339
@@ -29,7 +29,7 @@ msgstr "Ler código QR"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:77
 msgid "No account set up. Use the buttons in the toolbar to add accounts."
-msgstr "Nenhuma conta definida. Use os botões para adicionar uma conta."
+msgstr "Sem contas definidas. Use os botões para adicionar uma conta."
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:123
 msgid "Delete"
@@ -37,7 +37,7 @@ msgstr "Eliminar"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:137
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:145
 msgid "Edit"
@@ -45,7 +45,7 @@ msgstr "Editar"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:173
 msgid "Copied"
-msgstr ""
+msgstr "Copiado"
 
 #. TRANSLATORS: Text on a button
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:240
@@ -83,7 +83,7 @@ msgstr "Chave"
 #. TRANSLATORS: placeholder text in key textfield
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:414
 msgid "Enter the 16 or 32 digit key"
-msgstr ""
+msgstr "Introduza a chave de 16 ou 32 dígitos"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:423
 msgid "Counter"
