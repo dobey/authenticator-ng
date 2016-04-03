@@ -49,11 +49,12 @@ MainView {
 
     Page {
         id: mainPage
-        title: "Authenticator"
         visible: false
 
-        head {
-            actions: [
+        header: PageHeader {
+            title: "Authenticator"
+            leadingActionBar.actions: []
+            trailingActionBar.actions: [
                 Action {
                     text: i18n.tr("Add account")
                     iconName: "add"
@@ -86,7 +87,7 @@ MainView {
             anchors {
                 right: parent.right
                 top: parent.top
-                rightMargin: units.gu(4)
+                rightMargin: units.gu(2)
             }
 
             width: units.gu(6)
@@ -97,14 +98,15 @@ MainView {
             SequentialAnimation {
                 running: addHintIcon.visible
                 loops: Animation.Infinite
-                UbuntuNumberAnimation { target: addHintIcon; property: "anchors.topMargin"; from: units.gu(10); to: units.gu(14); duration: UbuntuAnimation.SleepyDuration }
-                UbuntuNumberAnimation { target: addHintIcon; property: "anchors.topMargin"; from: units.gu(14); to: units.gu(10); duration: UbuntuAnimation.SleepyDuration }
+                UbuntuNumberAnimation { target: addHintIcon; property: "anchors.topMargin"; from: units.gu(6); to: units.gu(10); duration: UbuntuAnimation.SleepyDuration }
+                UbuntuNumberAnimation { target: addHintIcon; property: "anchors.topMargin"; from: units.gu(10); to: units.gu(6); duration: UbuntuAnimation.SleepyDuration }
             }
         }
 
         ListView {
             id: accountsListView
             anchors.fill: parent
+            anchors.topMargin: mainPage.header.height
             model: accounts
             interactive: contentHeight > height - units.gu(6) //FIXME: -6gu because of the panel being locked to open
 
@@ -335,15 +337,15 @@ MainView {
     Component {
         id: editSheetComponent
         Page {
-            title: account == null ? i18n.tr("Add account") : i18n.tr("Edit account")
-
+            id: editPage
             property QtObject account: null
 
-            head {
-                actions: [
-                Action {
+            header: PageHeader {
+                title: account == null ? i18n.tr("Add account") : i18n.tr("Edit account")
+                trailingActionBar.actions: [
+                    Action {
                         iconName: "tick"
-                        enabled: nameField.text.length > 0 && secretField.text.length >= 16
+                        enabled: nameField.displayText.length > 0 && secretField.displayText.length >= 16
                         onTriggered: {
                             var newAccount = account;
                             if (newAccount == null) {
@@ -366,6 +368,7 @@ MainView {
             Flickable {
                 id: settingsFlickable
                 anchors.fill: parent
+                anchors.topMargin: editPage.header.height
                 contentHeight: settingsColumn.height + settingsColumn.anchors.margins * 2
 
                 Column {
