@@ -169,7 +169,6 @@ MainView {
                                 margins: units.gu(1)
                             }
                             horizontalAlignment: Text.AlignHCenter
-                            color: UbuntuColors.coolGrey
                             text: i18n.tr("Copied")
                             fontSize: "x-small"
                         }
