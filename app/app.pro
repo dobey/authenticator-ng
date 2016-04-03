@@ -10,7 +10,8 @@ INCLUDEPATH += /usr/include/
 INCLUDEPATH += /usr/include/zbar/
 INCLUDEPATH += /usr/include/liboath/
 
-LIBS += /usr/lib/liboath.a /usr/lib/x86_64-linux-gnu/libzbar.a -lv4l2 -ljpeg
+#LIBS += /usr/lib/liboath.a /usr/lib/x86_64-linux-gnu/libzbar.a -lv4l2 -ljpeg
+LIBS += /usr/lib/liboath.a /usr/lib/libzbar.a -lv4l2 -ljpeg
 
 SOURCES += main.cpp \
             account.cpp \
