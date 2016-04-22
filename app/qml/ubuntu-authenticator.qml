@@ -506,8 +506,6 @@ MainView {
             Camera {
                 id: camera
 
-                flash.mode: Camera.FlashTorch
-
                 focus.focusMode: Camera.FocusContinuous
                 focus.focusPointMode: Camera.FocusPointAuto
 
