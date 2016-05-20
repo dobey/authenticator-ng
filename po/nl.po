@@ -1,121 +1,122 @@
-# Czech translation for authenticator
-# Copyright (c) 2015 Rosetta Contributors and Canonical Ltd 2015
+# Dutch translation for authenticator
+# Copyright (c) 2016 Rosetta Contributors and Canonical Ltd 2016
 # This file is distributed under the same license as the authenticator package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: authenticator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-10 00:34+0200\n"
-"PO-Revision-Date: 2015-07-17 17:18+0000\n"
-"Last-Translator: Lukáš Tinkl <lukas.tinkl@canonical.com>\n"
-"Language-Team: Czech <cs@li.org>\n"
-"Language: cs\n"
+"PO-Revision-Date: 2016-05-11 15:07+0000\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"Language-Team: Dutch <nl@li.org>\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-04-30 05:38+0000\n"
-"X-Generator: Launchpad (build 17995)\n"
+"X-Launchpad-Export-Date: 2016-05-12 05:38+0000\n"
+"X-Generator: Launchpad (build 18025)\n"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:58
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:339
 msgid "Add account"
-msgstr "Přidat účet"
+msgstr "Account toevoegen"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:65
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:485
 msgid "Scan QR code"
-msgstr "Naskenovat QR kód"
+msgstr "QR-code scannen"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:77
 msgid "No account set up. Use the buttons in the toolbar to add accounts."
 msgstr ""
-"Nenastaven žádný účet. Použijte tlačítka v nástrojové liště pro přidání."
+"Er is geen account ingesteld. Gebruik de knoppen op de werkbalk om accounts "
+"toe te voegen."
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:123
 msgid "Delete"
-msgstr "Smazat"
+msgstr "Verwijderen"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:137
 msgid "Copy"
-msgstr ""
+msgstr "Kopiëren"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:145
 msgid "Edit"
-msgstr "Upravit"
+msgstr "Bewerken"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:173
 msgid "Copied"
-msgstr ""
+msgstr "Gekopiëerd"
 
 #. TRANSLATORS: Text on a button
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:240
 msgid "Generate PIN"
-msgstr "Generovat PIN"
+msgstr "PIN-code genereren"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:339
 msgid "Edit account"
-msgstr "Upravit účet"
+msgstr "Account bewerken"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:383
 msgid "Name"
-msgstr "Název"
+msgstr "Naam"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:389
 msgid "Enter the account name"
-msgstr "Zadejte název účtu"
+msgstr "Vul de accountnaam in"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:394
 msgid "Type"
-msgstr "Typ"
+msgstr "Type"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:400
 msgid "Counter based"
-msgstr "Založený na počítadle"
+msgstr "Tellergebaseerd"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:400
 msgid "Time based"
-msgstr "Založený na čase"
+msgstr "Tijdgebaseerd"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:405
 msgid "Key"
-msgstr "Klíč"
+msgstr "Sleutel"
 
 #. TRANSLATORS: placeholder text in key textfield
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:414
 msgid "Enter the 16 or 32 digit key"
-msgstr "Zadejte 16 nebo 32 místný klíč"
+msgstr "Vul de sleutel met 16 of 32 cijfers in"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:423
 msgid "Counter"
-msgstr "Počítadlo"
+msgstr "Teller"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:440
 msgid "Time step"
-msgstr "Krok v čase"
+msgstr "Tijdsstap"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:456
 msgid "PIN length"
-msgstr "Délka PINu"
+msgstr "Lengte van PIN-code"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:544
 msgid "Scan a QR Code containing account information"
-msgstr "Naskenovat QR kód obsahující informace o účtu"
+msgstr "Scan een QR-code die accountinformatie bevat"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:563
 msgid "Remove account?"
-msgstr "Odstranit účet?"
+msgstr "Account verwijderen?"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:564
 #, qt-format
 msgid "Are you sure you want to remove %1?"
-msgstr "Určitě chcete odstranit %1?"
+msgstr "Weet u zeker dat u %1 wilt verwijderen?"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:572
 msgid "Yes"
-msgstr "Ano"
+msgstr "Ja"
 
 #: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:580
 msgid "Cancel"
-msgstr "Zrušit"
+msgstr "Annuleren"

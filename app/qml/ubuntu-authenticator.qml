@@ -509,9 +509,27 @@ MainView {
                 focus.focusMode: Camera.FocusContinuous
                 focus.focusPointMode: Camera.FocusPointAuto
 
+                /* Use only digital zoom for now as it's what phone cameras mostly use.
+                       TODO: if optical zoom is available, maximumZoom should be the combined
+                       range of optical and digital zoom and currentZoom should adjust the two
+                       transparently based on the value. */
+                property alias currentZoom: camera.digitalZoom
+                property alias maximumZoom: camera.maximumDigitalZoom
+
+                function startAndConfigure() {
+                    start();
+                    focus.focusMode = Camera.FocusContinuous
+                    focus.focusPointMode = Camera.FocusPointAuto
+                }
+
+
                 Component.onCompleted: {
                     captureTimer.start()
                 }
+            }
+            Connections {
+                target: Qt.application
+                onActiveChanged: if (Qt.application.active) camera.startAndConfigure()
             }
 
             Timer {
@@ -521,6 +539,13 @@ MainView {
                 onTriggered: {
                     print("capturing");
                     qrCodeReader.grab();
+                }
+                onRunningChanged: {
+                    if (running) {
+                        camera.startAndConfigure();
+                    } else {
+                        camera.stop();
+                    }
                 }
             }
 
