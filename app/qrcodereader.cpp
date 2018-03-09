@@ -165,8 +165,9 @@ void Reader::doWork(const QImage &image)
     scanner.set_config(zbar::ZBAR_QRCODE, zbar::ZBAR_CFG_ENABLE, 1);
 
     // scan the image for barcodes
-    int n = scanner.scan(tmp);
-//    qDebug() << "scanner ret" << n;
+    if (scanner.scan(tmp) <= 0) {
+        return;
+    }
 
     img.set_symbols(tmp.get_symbols());
 
