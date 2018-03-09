@@ -33,7 +33,7 @@ MainView {
     applicationName: "com.ubuntu.developer.mzanetti.ubuntu-authenticator"
 
     width: units.gu(40)
-    height: units.gu(68)
+    height: units.gu(70)
 
     theme.name: "Ubuntu.Components.Themes.SuruDark"
 
@@ -112,10 +112,9 @@ MainView {
 
             delegate: ListItem {
                 id: accountDelegate
-                height: compactLayout ? units.gu(6) : units.gu(12)
+                height: units.gu(12)
                 width: parent.width
 
-                property bool compactLayout: accountsListView.count * units.gu(12) > accountsListView.height
                 property bool activated: false
 
                 leadingActions: ListItemActions {
@@ -189,13 +188,13 @@ MainView {
                         left: parent.left
                         right: parent.right
                         leftMargin: units.gu(2)
-                        topMargin: accountDelegate.compactLayout ? 0 : units.gu(2)
+                        topMargin: units.gu(2)
                         rightMargin: refreshButton.width + units.gu(2) + (refreshButton.visible ? units.gu(1) : 0)
                     }
                     rowSpacing: units.gu(1)
                     columnSpacing: units.gu(1)
                     height: parent.height - anchors.topMargin * 2
-                    columns: accountDelegate.compactLayout ? 2 : 1
+                    columns: 1
 
                     Label {
                         Layout.fillWidth: true
@@ -208,11 +207,9 @@ MainView {
                     Label {
                         id: otpLabel
                         Layout.fillHeight: true
-                        Layout.preferredWidth: accountDelegate.compactLayout
-                                               ? accountDelegate.activated || type === Account.TypeTOTP ? otpLabel.contentWidth : units.gu(16)
-                                               : delegateColumn.width
+                        Layout.preferredWidth: delegateColumn.width
                         fontSize: "x-large"
-                        text: accountDelegate.activated || type === Account.TypeTOTP ? otp : ""
+                        text: accountDelegate.activated || type === Account.TypeTOTP ? otp : "------"
                         verticalAlignment: Text.AlignVCenter
 
                         AbstractButton {
@@ -229,23 +226,6 @@ MainView {
                                 }
                             }
                         }
-
-                        Button {
-                            anchors {
-                                left: parent.left
-                                right: parent.right
-                                verticalCenter: parent.verticalCenter
-                            }
-
-                            // TRANSLATORS: Text on a button
-                            text: i18n.tr("Generate PIN")
-                            visible: !accountDelegate.activated && type === Account.TypeHOTP
-                            color: UbuntuColors.green
-                            onClicked: {
-                                accounts.get(index).next()
-                                accountDelegate.activated = true
-                            }
-                        }
                     }
                 }
 
@@ -256,18 +236,20 @@ MainView {
                         rightMargin: units.gu(2)
                         verticalCenter: parent.verticalCenter
                     }
-                    width: type === Account.TypeHOTP && !accountDelegate.activated ? 0 : height
-                    height: accountDelegate.compactLayout ? units.gu(4) : units.gu(6)
-                    visible: accountDelegate.activated || type == Account.TypeTOTP
+                    width: height
+                    height: units.gu(4)
 
                     Icon {
                         anchors.fill: parent
                         name: "reload"
-                        visible: accountDelegate.activated && type === Account.TypeHOTP
+                        visible: type === Account.TypeHOTP
                         color: UbuntuColors.green
                         AbstractButton {
                             anchors.fill: parent
-                            onClicked: accounts.generateNext(index)
+                            onClicked: {
+                                accounts.generateNext(index);
+                                accountDelegate.activated = true;
+                            }
                         }
                     }
 
@@ -275,7 +257,7 @@ MainView {
                         id: progressCircle
                         anchors.fill: parent
                         anchors.margins: units.dp(4)
-                        visible: type == Account.TypeTOTP
+                        visible: type === Account.TypeTOTP
                         property real progress: 0
 
                         Timer {
