@@ -243,7 +243,7 @@ MainView {
                         anchors.fill: parent
                         name: "reload"
                         visible: type === Account.TypeHOTP
-                        color: UbuntuColors.green
+                        color: otpLabel.color
                         AbstractButton {
                             anchors.fill: parent
                             onClicked: {
@@ -286,15 +286,12 @@ MainView {
                                 ctx.reset();
                                 var data = [1 - progress, progress];
                                 var myTotal = 0;
-                                var myColor = [UbuntuColors.green, root.backgroundColor];
 
                                 for(var e = 0; e < data.length; e++) {
                                     myTotal += data[e];
                                 }
 
-                                ctx.fillStyle = UbuntuColors.green
-                                ctx.strokeStyle = UbuntuColors.green
-                                ctx.lineWidth = units.dp(2);
+                                ctx.fillStyle = otpLabel.color;
 
                                 ctx.beginPath();
                                 ctx.moveTo(canvas.width/2,canvas.height/2);
@@ -302,10 +299,6 @@ MainView {
                                 ctx.lineTo(canvas.width/2,canvas.height/2);
                                 ctx.fill();
                                 ctx.closePath();
-                                ctx.beginPath();
-                                ctx.arc(canvas.width/2,canvas.height/2,canvas.height/2 - units.dp(1),0,Math.PI*2,false);
-                                ctx.closePath();
-                                ctx.stroke();
 
                                 ctx.restore();
                             }
