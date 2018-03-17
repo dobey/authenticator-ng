@@ -208,6 +208,7 @@ MainView {
                         id: otpLabel
                         Layout.fillHeight: true
                         Layout.preferredWidth: delegateColumn.width
+                        font.family: "mono"
                         fontSize: "x-large"
                         text: accountDelegate.activated || type === Account.TypeTOTP ? otp : "------"
                         verticalAlignment: Text.AlignVCenter
