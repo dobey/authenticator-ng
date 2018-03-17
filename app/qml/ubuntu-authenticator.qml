@@ -242,6 +242,7 @@ MainView {
 
                     Icon {
                         anchors.fill: parent
+                        anchors.margins: units.dp(3)
                         name: "reload"
                         visible: type === Account.TypeHOTP
                         color: otpLabel.color
