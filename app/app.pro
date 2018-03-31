@@ -6,7 +6,6 @@ QT += quick widgets
 load(ubuntu-click)
 
 INCLUDEPATH += ../plugin/OAth
-INCLUDEPATH += /usr/include/
 INCLUDEPATH += /usr/include/zbar/
 INCLUDEPATH += /usr/include/liboath/
 
