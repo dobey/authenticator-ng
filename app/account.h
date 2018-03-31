@@ -1,9 +1,7 @@
 /*****************************************************************************
  * Copyright: 2013 Michael Zanetti <michael_zanetti@gmx.net>                 *
  *                                                                           *
- * This file is part of ubuntu-authenticator                                 *
- *                                                                           *
- * This prject is free software: you can redistribute it and/or modify       *
+ * This project is free software: you can redistribute it and/or modify       *
  * it under the terms of the GNU General Public License as published by      *
  * the Free Software Foundation, either version 3 of the License, or         *
  * (at your option) any later version.                                       *

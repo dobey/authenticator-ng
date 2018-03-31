@@ -2,7 +2,7 @@
 Type=Application
 Name=Authenticator
 Comment=Two factor authenticaton helper
-Exec=ubuntu-authenticator %u
+Exec=authenticator-ng %u
 Terminal=false
-Icon=ubuntu-authenticator.svg
+Icon=authenticator-ng.svg
 X-Ubuntu-Touch=true

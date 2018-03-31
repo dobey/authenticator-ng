@@ -3,13 +3,13 @@
     "framework": "ubuntu-sdk-15.04.4",
     "architecture": "armhf",
     "hooks": {
-        "ubuntu-sso": {
-            "apparmor": "ubuntu-authenticator.json",
-            "desktop": "ubuntu-authenticator.desktop"
+        "authenticator": {
+            "apparmor": "authenticator-ng.json",
+            "desktop": "authenticator-ng.desktop"
         }
     },
-    "maintainer": "Michael Zanetti <michael.zanetti@canonical.com>",
-    "name": "com.ubuntu.developer.mzanetti.ubuntu-authenticator",
-    "title": "ubuntu-authenticator",
-    "version": "0.15.0"
+    "maintainer": "Rodney Dawes",
+    "name": "authenticator-ng.dobey",
+    "title": "Authenticator",
+    "version": "0.99"
 }

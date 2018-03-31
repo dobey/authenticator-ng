@@ -1,9 +1,7 @@
 /*****************************************************************************
  * Copyright: 2013 Michael Zanetti <michael_zanetti@gmx.net>                 *
  *                                                                           *
- * This file is part of ubuntu-authenticator                                 *
- *                                                                           *
- * This prject is free software: you can redistribute it and/or modify       *
+ * This project is free software: you can redistribute it and/or modify       *
  * it under the terms of the GNU General Public License as published by      *
  * the Free Software Foundation, either version 3 of the License, or         *
  * (at your option) any later version.                                       *
@@ -29,7 +27,7 @@
 AccountModel::AccountModel(QObject *parent) :
     QAbstractListModel(parent)
 {
-    QSettings settings("com.ubuntu.developer.mzanetti.ubuntu-authenticator", "ubuntu-authenticator");
+    QSettings settings("authenticator-ng.dobey", "authenticator");
 //    qDebug() << "loading settings file:" << settings.fileName();
     foreach(const QString & group, settings.childGroups()) {
 //        qDebug() << "found group" << group << QUuid(group).toString();
@@ -129,7 +127,7 @@ void AccountModel::deleteAccount(int index)
 
     Account *account = m_accounts.takeAt(index);
 //    qDebug() << "got account" << account;
-    QSettings settings("com.ubuntu.developer.mzanetti.ubuntu-authenticator", "ubuntu-authenticator");
+    QSettings settings("authenticator-ng.dobey", "authenticator");
     settings.beginGroup(account->id().toString());
     settings.remove("");
     settings.endGroup();
@@ -184,7 +182,7 @@ void AccountModel::accountChanged()
 
 void AccountModel::storeAccount(Account *account)
 {
-    QSettings settings("com.ubuntu.developer.mzanetti.ubuntu-authenticator", "ubuntu-authenticator");
+    QSettings settings("authenticator-ng.dobey", "authenticator");
     settings.beginGroup(account->id().toString());
     settings.setValue("account", account->name());
     settings.setValue("type", account->type() == Account::TypeTOTP ? "totp" : "hotp");

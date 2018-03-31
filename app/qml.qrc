@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>qml/ubuntu-authenticator.qml</file>
+        <file>qml/authenticator-ng.qml</file>
     </qresource>
 </RCC>

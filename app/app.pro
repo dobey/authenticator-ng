@@ -1,4 +1,4 @@
-TARGET = ubuntu-authenticator
+TARGET = authenticator-ng
 
 QT += quick widgets
 
@@ -28,11 +28,11 @@ RESOURCES += \
 # Install files into the click package
 message("installing to $${UBUNTU_CLICK_BINARY_PATH}")
 target.path = $${UBUNTU_CLICK_BINARY_PATH}
-icon.files = ../ubuntu-authenticator.svg
+icon.files = ../authenticator-ng.svg
 icon.path = /
-desktopfile.files = ../ubuntu-authenticator.desktop
+desktopfile.files = ../authenticator-ng.desktop
 desktopfile.path = /
-apparmor.files = ../ubuntu-authenticator.json
+apparmor.files = ../authenticator-ng.json
 apparmor.path = /
 
 INSTALLS += icon desktopfile apparmor target

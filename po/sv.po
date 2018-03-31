@@ -17,105 +17,105 @@ msgstr ""
 "X-Launchpad-Export-Date: 2016-05-21 05:44+0000\n"
 "X-Generator: Launchpad (build 18025)\n"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:58
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:339
+#: app/qml/authenticator-ng.qml:58
+#: app/qml/authenticator-ng.qml:339
 msgid "Add account"
 msgstr "Lägg till konto"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:65
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:485
+#: app/qml/authenticator-ng.qml:65
+#: app/qml/authenticator-ng.qml:485
 msgid "Scan QR code"
 msgstr "Skanna QR-kod"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:77
+#: app/qml/authenticator-ng.qml:77
 msgid "No account set up. Use the buttons in the toolbar to add accounts."
 msgstr ""
 "Inga konton uppsatta. Använd knapparna i verktygsraden för att lägga till "
 "konton."
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:123
+#: app/qml/authenticator-ng.qml:123
 msgid "Delete"
 msgstr "Ta bort"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:137
+#: app/qml/authenticator-ng.qml:137
 msgid "Copy"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:145
+#: app/qml/authenticator-ng.qml:145
 msgid "Edit"
 msgstr "Redigera"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:173
+#: app/qml/authenticator-ng.qml:173
 msgid "Copied"
 msgstr ""
 
 #. TRANSLATORS: Text on a button
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:240
+#: app/qml/authenticator-ng.qml:240
 msgid "Generate PIN"
 msgstr "Generera PIN"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:339
+#: app/qml/authenticator-ng.qml:339
 msgid "Edit account"
 msgstr "Redigera konto"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:383
+#: app/qml/authenticator-ng.qml:383
 msgid "Name"
 msgstr "Namn"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:389
+#: app/qml/authenticator-ng.qml:389
 msgid "Enter the account name"
 msgstr "Fyll i kontots namn"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:394
+#: app/qml/authenticator-ng.qml:394
 msgid "Type"
 msgstr "Typ"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:400
+#: app/qml/authenticator-ng.qml:400
 msgid "Counter based"
 msgstr "Räknarbaserad"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:400
+#: app/qml/authenticator-ng.qml:400
 msgid "Time based"
 msgstr "Tidsbaserad"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:405
+#: app/qml/authenticator-ng.qml:405
 msgid "Key"
 msgstr "Nyckel"
 
 #. TRANSLATORS: placeholder text in key textfield
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:414
+#: app/qml/authenticator-ng.qml:414
 msgid "Enter the 16 or 32 digit key"
 msgstr ""
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:423
+#: app/qml/authenticator-ng.qml:423
 msgid "Counter"
 msgstr "Räknare"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:440
+#: app/qml/authenticator-ng.qml:440
 msgid "Time step"
 msgstr "Tidssteg"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:456
+#: app/qml/authenticator-ng.qml:456
 msgid "PIN length"
 msgstr "PIN-längd"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:544
+#: app/qml/authenticator-ng.qml:544
 msgid "Scan a QR Code containing account information"
 msgstr "Skanna en QR-kod innehållandes kontoinformation"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:563
+#: app/qml/authenticator-ng.qml:563
 msgid "Remove account?"
 msgstr "Ta bort konto?"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:564
+#: app/qml/authenticator-ng.qml:564
 #, qt-format
 msgid "Are you sure you want to remove %1?"
 msgstr "Är du säker på att du vill ta bort %1?"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:572
+#: app/qml/authenticator-ng.qml:572
 msgid "Yes"
 msgstr "Ja"
 
-#: /home/micha/Develop/authenticator/app/qml/ubuntu-authenticator.qml:580
+#: app/qml/authenticator-ng.qml:580
 msgid "Cancel"
 msgstr "Avbryt"
