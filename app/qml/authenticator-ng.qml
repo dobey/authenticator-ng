@@ -18,29 +18,28 @@
 
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
+/*
 import Ubuntu.Components 1.3
 import Ubuntu.Components.ListItems 1.3
 import Ubuntu.Components.Popups 1.3
+*/
 import OAth 1.0
 import QtMultimedia 5.0
+import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.0
 
-MainView {
+Item {
     id: root
 
-    applicationName: "authenticator-ng.dobey"
+    //applicationName: "authenticator-ng.dobey"
 
-    width: units.gu(40)
-    height: units.gu(70)
+    width: 320 // units.gu(40)
+    height: 560 // units.gu(70)
 
-    theme.name: "Ubuntu.Components.Themes.SuruDark"
-
-    Component.onCompleted: {
-        i18n.domain = "authenticator"
-    }
-
-    PageStack {
+    StackView {
         id: pageStack
+        anchors.fill: parent
 
         Component.onCompleted: pageStack.push(mainPage)
     }
@@ -48,73 +47,72 @@ MainView {
     Page {
         id: mainPage
         visible: false
+        anchors.fill: parent
 
-        header: PageHeader {
-            title: "Authenticator"
-            leadingActionBar.actions: []
-            trailingActionBar.actions: [
-                Action {
-                    text: i18n.tr("Add account")
-                    iconName: "add"
-                    onTriggered: {
-                        pageStack.push(editSheetComponent)
+        header: ToolBar {
+            width: parent.width
+            height: 48
+
+            RowLayout {
+                anchors.fill: parent
+                anchors.margins: 4
+
+                RowLayout {
+                    anchors.right: parent.right
+                    Layout.alignment: Qt.AlignRight
+
+                    ToolButton {
+                        //tooltip: "Add account"
+                        Image {
+                            anchors.margins: 8
+                            anchors.fill: parent
+                            source: "qrc:///add"
+                        }
+                        onClicked: {
+                            pageStack.push(editSheetComponent)
+                        }
                     }
-                },
-                Action {
-                    text: i18n.tr("Scan QR code")
-                    iconName: "camera-symbolic"
-                    onTriggered: {
-                        pageStack.push(grabCodeComponent)
+                    ToolButton {
+                        //tooltip: "Scan QR code"
+                        Image {
+                            anchors.margins: 8
+                            anchors.fill: parent
+                            source: "qrc:///camera"
+                        }
+                        onClicked: {
+                            pageStack.push(grabCodeComponent)
+                        }
                     }
                 }
-            ]
+            }
         }
 
-        Label {
-            anchors.centerIn: parent
-            width: parent.width - units.gu(4)
-            text: i18n.tr("No account set up. Use the buttons in the toolbar to add accounts.")
-            wrapMode: Text.WordWrap
-            fontSize: "large"
-            horizontalAlignment: Text.AlignHCenter
-            visible: accountsListView.count == 0 && pageStack.depth == 1
+        Rectangle {
+            anchors.fill: parent
+            color: "#ededed"
         }
 
-        Icon {
-            id: addHintIcon
-            anchors {
-                right: parent.right
-                top: parent.top
-                rightMargin: units.gu(2)
-            }
-
-            width: units.gu(6)
-            height: width
-            name: "keyboard-caps-enabled"
-            visible: accountsListView.count == 0 && pageStack.depth == 1
-
-            SequentialAnimation {
-                running: addHintIcon.visible
-                loops: Animation.Infinite
-                UbuntuNumberAnimation { target: addHintIcon; property: "anchors.topMargin"; from: units.gu(6); to: units.gu(10); duration: UbuntuAnimation.SleepyDuration }
-                UbuntuNumberAnimation { target: addHintIcon; property: "anchors.topMargin"; from: units.gu(10); to: units.gu(6); duration: UbuntuAnimation.SleepyDuration }
-            }
+        Rectangle {
+            anchors.top: parent.top
+            color: "#333333"
+            width: parent.width
+            height: 1
         }
 
         ListView {
             id: accountsListView
             anchors.fill: parent
-            anchors.topMargin: mainPage.header.height
             model: accounts
-            interactive: contentHeight > height - units.gu(6) //FIXME: -6gu because of the panel being locked to open
+            interactive: contentHeight > height - 48 //units.gu(6) //FIXME: -6gu because of the panel being locked to open
 
-            delegate: ListItem {
+            delegate: RowLayout {
                 id: accountDelegate
-                height: units.gu(12)
+                height: 72 //units.gu(12)
                 width: parent.width
 
                 property bool activated: false
 
+/*
                 leadingActions: ListItemActions {
                     actions: [
                         Action {
@@ -148,12 +146,13 @@ MainView {
                         }
                     ]
                 }
-
+*/
                 function copyToClipBoard() {
                     Clipboard.push(["text/plain", otpLabel.text]);
                     PopupUtils.open(copiedPopover, copy)
                 }
 
+/*
                 Component {
                     id: copiedPopover
 
@@ -178,6 +177,7 @@ MainView {
                         }
                     }
                 }
+*/
 
                 GridLayout {
                     id: delegateColumn
@@ -185,12 +185,12 @@ MainView {
                         top: parent.top
                         left: parent.left
                         right: parent.right
-                        leftMargin: units.gu(2)
-                        topMargin: units.gu(2)
-                        rightMargin: refreshButton.width + units.gu(2) + (refreshButton.visible ? units.gu(1) : 0)
+                        leftMargin: 16 //units.gu(2)
+                        topMargin: 8 //units.gu(2)
+                        rightMargin: refreshButton.width + 16 /*units.gu(2)*/ + (refreshButton.visible ? 8 /*units.gu(1)*/ : 0)
                     }
-                    rowSpacing: units.gu(1)
-                    columnSpacing: units.gu(1)
+                    rowSpacing: 2 //units.gu(1)
+                    columnSpacing: 2 //units.gu(1)
                     height: parent.height - anchors.topMargin * 2
                     columns: 1
 
@@ -207,11 +207,11 @@ MainView {
                         Layout.fillHeight: true
                         Layout.preferredWidth: delegateColumn.width
                         font.family: "mono"
-                        fontSize: "x-large"
+                        font.pixelSize: 24
                         text: accountDelegate.activated || type === Account.TypeTOTP ? otp : "------"
                         verticalAlignment: Text.AlignVCenter
 
-                        AbstractButton {
+                        MouseArea {
                             id: copy
                             anchors {
                                 left: parent.left
@@ -219,10 +219,8 @@ MainView {
                             }
                             width: parent.contentWidth
                             height: parent.contentHeight
-                            action: Action {
-                                onTriggered: {
-                                    accountDelegate.copyToClipBoard()
-                                }
+                            onClicked: {
+                                accountDelegate.copyToClipBoard()
                             }
                         }
                     }
@@ -232,19 +230,20 @@ MainView {
                     id: refreshButton
                     anchors {
                         right: parent.right
-                        rightMargin: units.gu(2)
+                        rightMargin: 16 //units.gu(2)
                         verticalCenter: parent.verticalCenter
                     }
+                    height: parent.height //units.gu(4)
                     width: height
-                    height: units.gu(4)
 
-                    Icon {
-                        anchors.fill: parent
-                        anchors.margins: units.dp(3)
-                        name: "reload"
+                    Image {
+                        anchors.centerIn: parent
+                        source: "qrc:///reload"
                         visible: type === Account.TypeHOTP
-                        color: otpLabel.color
-                        AbstractButton {
+                        height: 32
+                        width: height
+                        //color: otpLabel.color
+                        MouseArea {
                             anchors.fill: parent
                             onClicked: {
                                 accounts.generateNext(index);
@@ -255,8 +254,10 @@ MainView {
 
                     Item {
                         id: progressCircle
-                        anchors.fill: parent
-                        anchors.margins: units.dp(4)
+                        anchors.centerIn: parent
+                        anchors.rightMargin: 16 //units.dp(4)
+                        height: 32
+                        width: height
                         visible: type === Account.TypeTOTP
                         property real progress: 0
 
@@ -294,8 +295,12 @@ MainView {
                                 ctx.fillStyle = otpLabel.color;
 
                                 ctx.beginPath();
-                                ctx.moveTo(canvas.width/2,canvas.height/2);
-                                ctx.arc(canvas.width/2,canvas.height/2,canvas.height/2,0,(Math.PI*2*((1-progress)/myTotal)),false);
+                                ctx.moveTo(canvas.width / 2, canvas.height / 2);
+                                //console.log(canvas.width / 2, canvas.height / 2, canvas.height / 2, 0, (Math.PI * 2 * ((1 - progress) / myTotal)), false);
+                                ctx.arc(canvas.width / 2, canvas.height / 2,
+                                        canvas.height / 2, 0, 
+                                        (Math.PI * 2 * ((1 - progress) / myTotal)),
+                                        false);
                                 ctx.lineTo(canvas.width/2,canvas.height/2);
                                 ctx.fill();
                                 ctx.closePath();
@@ -315,6 +320,7 @@ MainView {
             id: editPage
             property QtObject account: null
 
+/*
             header: PageHeader {
                 title: account == null ? i18n.tr("Add account") : i18n.tr("Edit account")
                 trailingActionBar.actions: [
@@ -328,7 +334,7 @@ MainView {
                             }
 
                             newAccount.name = nameField.text
-                            newAccount.type = typeSelector.selectedIndex == 1 ? Account.TypeTOTP : Account.TypeHOTP
+                            newAccount.type = typeSelector.currentIndex == 1 ? Account.TypeTOTP : Account.TypeHOTP
                             newAccount.secret = secretField.text
                             newAccount.counter = parseInt(counterField.text)
                             newAccount.timeStep = parseInt(timeStepField.text)
@@ -339,6 +345,7 @@ MainView {
                     }
                 ]
             }
+*/
 
             Flickable {
                 id: settingsFlickable
@@ -352,9 +359,9 @@ MainView {
                         left: parent.left
                         right: parent.right
                         top: parent.top
-                        margins: units.gu(2)
+                        margins: 16 //units.gu(2)
                     }
-                    spacing: units.gu(2)
+                    spacing: 16 //units.gu(2)
 
                     Label {
                         text: i18n.tr("Name")
@@ -371,11 +378,12 @@ MainView {
                         text: i18n.tr("Type")
                     }
 
-                    OptionSelector {
+                    ComboBox {
                         id: typeSelector
                         width: parent.width
+                        editable: false
                         model: [i18n.tr("Counter based"), i18n.tr("Time based")]
-                        selectedIndex: account && account.type === Account.TypeTOTP ? 1 : 0
+                        currentIndex: account && account.type === Account.TypeTOTP ? 1 : 0
                     }
 
                     Label {
@@ -385,7 +393,7 @@ MainView {
                         id: secretField
                         width: parent.width
                         text: account ? account.secret : ""
-                        autoSize: true
+                        //autoSize: true
                         wrapMode: Text.WrapAnywhere
                         // TRANSLATORS: placeholder text in key textfield
                         placeholderText: i18n.tr("Enter the 16 or 32 digit key")
@@ -393,8 +401,8 @@ MainView {
                     }
                     Row {
                         width: parent.width
-                        spacing: units.gu(1)
-                        visible: typeSelector.selectedIndex == 0
+                        spacing: 4 //units.gu(1)
+                        visible: typeSelector.currentIndex == 0
 
                         Label {
                             text: i18n.tr("Counter")
@@ -410,8 +418,8 @@ MainView {
                     }
                     Row {
                         width: parent.width
-                        spacing: units.gu(1)
-                        visible: typeSelector.selectedIndex == 1
+                        spacing: 4 //units.gu(1)
+                        visible: typeSelector.currentIndex == 1
 
                         Label {
                             text: i18n.tr("Time step")
@@ -427,7 +435,7 @@ MainView {
                     }
                     Row {
                         width: parent.width
-                        spacing: units.gu(1)
+                        spacing: 4 //units.gu(1)
 
                         Label {
                             text: i18n.tr("PIN length")
@@ -459,7 +467,7 @@ MainView {
         id: grabCodeComponent
         Page {
             id: grabCodePage
-            title: i18n.tr("Scan QR code")
+            title: "Scan QR code"
 
             QRCodeReader {
                 id: qrCodeReader
@@ -539,12 +547,12 @@ MainView {
                     left: parent.left
                     top: parent.top
                     right: parent.right
-                    margins: units.gu(1)
+                    margins: 4 //units.gu(1)
                 }
-                text: i18n.tr("Scan a QR Code containing account information")
+                text: ("Scan a QR Code containing account information")
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
-                fontSize: "large"
+                font.pixelSize: 16
             }
         }
     }
@@ -560,8 +568,10 @@ MainView {
         id: removeQuestionComponent
         Dialog {
             id: removeQuestionDialog
-            title: i18n.tr("Remove account?")
-            text: i18n.tr("Are you sure you want to remove %1?").arg(account.name)
+            title: ("Remove account?")
+            contentItem: Label {
+                text: ("Are you sure you want to remove %1?").arg(account.name)
+            }
 
             property QtObject account
 
@@ -569,20 +579,20 @@ MainView {
             signal rejected()
 
             Button {
-                text: i18n.tr("Yes")
+                text: ("Yes")
                 onClicked: {
                     PopupUtils.close(removeQuestionDialog);
                     removeQuestionDialog.accepted();
                 }
-                color: UbuntuColors.green
+                //color: UbuntuColors.green
             }
             Button {
-                text: i18n.tr("Cancel")
+                text: ("Cancel")
                 onClicked: {
                     PopupUtils.close(removeQuestionDialog);
                     removeQuestionDialog.rejected();
                 }
-                color: UbuntuColors.red
+                //color: UbuntuColors.red
             }
         }
     }

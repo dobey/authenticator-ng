@@ -9,7 +9,7 @@ INCLUDEPATH += ../plugin/OAth
 INCLUDEPATH += /usr/include/zbar/
 INCLUDEPATH += /usr/include/liboath/
 
-LIBS += -Wl,-Bstatic -lzbar -loath -Wl,-Bdynamic -lv4l2 -ljpeg
+LIBS += -Wl,-Bstatic -lzbar -Wl,-Bdynamic -loath -lv4l2 -ljpeg
 
 SOURCES += main.cpp \
             account.cpp \
