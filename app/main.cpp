@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<Account>("OAth", 1, 0, "Account", "Use AccountModel::createAccount() to create a new account");
     qmlRegisterType<QRCodeReader>("OAth", 1, 0, "QRCodeReader");
 
+    view.setTitle("Authenticator");
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.setSource(QUrl("qrc:///qml/authenticator-ng.qml"));
     view.show();

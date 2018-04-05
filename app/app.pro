@@ -5,7 +5,6 @@ QT += quick widgets
 #load Ubuntu specific features
 load(ubuntu-click)
 
-INCLUDEPATH += ../plugin/OAth
 INCLUDEPATH += /usr/include/zbar/
 INCLUDEPATH += /usr/include/liboath/
 
