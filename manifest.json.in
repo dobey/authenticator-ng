@@ -8,7 +8,7 @@
             "desktop": "authenticator-ng.desktop"
         }
     },
-    "maintainer": "Rodney Dawes",
+    "maintainer": "Rodney Dawes <.@.>",
     "name": "authenticator-ng.dobey",
     "title": "Authenticator",
     "version": "1.0"
