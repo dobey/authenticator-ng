@@ -18,16 +18,12 @@
 
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
-/*
-import Ubuntu.Components 1.3
-import Ubuntu.Components.ListItems 1.3
-import Ubuntu.Components.Popups 1.3
-*/
 import OAth 1.0
 import QtMultimedia 5.0
 import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.0
+import "."
 
 Item {
     id: root
@@ -47,11 +43,16 @@ Item {
     Page {
         id: mainPage
         visible: false
-        anchors.fill: parent
 
         header: ToolBar {
+            id: mainToolbar
             width: parent.width
             height: 48
+
+            Rectangle {
+                anchors.fill: parent
+                color: "#ffffff"
+            }
 
             RowLayout {
                 anchors.fill: parent
@@ -89,19 +90,58 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            color: "#ededed"
+            color: "#ffffff"
         }
 
         Rectangle {
             anchors.top: parent.top
-            color: "#333333"
+            color: "#e6e6e6"
             width: parent.width
-            height: 1
+            height: 2
+        }
+
+        Popup {
+            id: popover
+            padding: 8
+
+            // FIXME: Position/size/style all wrong
+            x: parent.width / 2 - width / 2
+            y: parent.height - height - 8
+
+            background: Rectangle {
+                color: "#111111"
+                opacity: 0.85
+                radius: 11.6
+            }
+
+            Label {
+                id: copiedLabel
+                anchors.fill: parent
+                horizontalAlignment: Text.AlignHCenter
+                color: "#ffffff"
+                text: ("Code copied to clipboard")
+                font.pixelSize: 16
+            }
+
+            Timer {
+                id: popupTimer
+                interval: 3000
+                running: true
+                onTriggered: {
+                    popover.close();
+                }
+            }
+
+            function show() {
+                open();
+                popupTimer.start();
+            }
         }
 
         ListView {
             id: accountsListView
             anchors.fill: parent
+            spacing: 4
             model: accounts
             interactive: contentHeight > height - 48 //units.gu(6) //FIXME: -6gu because of the panel being locked to open
 
@@ -147,37 +187,12 @@ Item {
                     ]
                 }
 */
+
                 function copyToClipBoard() {
-                    Clipboard.push(["text/plain", otpLabel.text]);
-                    PopupUtils.open(copiedPopover, copy)
+                    // FIXME: no Clipboard component in qqc2
+                    //Clipboard.push(["text/plain", otpLabel.text]);
+                    popover.show();
                 }
-
-/*
-                Component {
-                    id: copiedPopover
-
-                    Popover {
-                        id: popover
-                        contentWidth: copy.width - units.gu(4)
-                        contentHeight: units.gu(4)
-
-                        Label {
-                            anchors {
-                                fill: parent
-                                margins: units.gu(1)
-                            }
-                            horizontalAlignment: Text.AlignHCenter
-                            text: i18n.tr("Copied")
-                            fontSize: "x-small"
-                        }
-
-                        Timer {
-                            interval: 3000; running: true;
-                            onTriggered: popover.hide()
-                        }
-                    }
-                }
-*/
 
                 GridLayout {
                     id: delegateColumn
@@ -296,7 +311,6 @@ Item {
 
                                 ctx.beginPath();
                                 ctx.moveTo(canvas.width / 2, canvas.height / 2);
-                                //console.log(canvas.width / 2, canvas.height / 2, canvas.height / 2, 0, (Math.PI * 2 * ((1 - progress) / myTotal)), false);
                                 ctx.arc(canvas.width / 2, canvas.height / 2,
                                         canvas.height / 2, 0, 
                                         (Math.PI * 2 * ((1 - progress) / myTotal)),
@@ -320,37 +334,66 @@ Item {
             id: editPage
             property QtObject account: null
 
-/*
-            header: PageHeader {
-                title: account == null ? i18n.tr("Add account") : i18n.tr("Edit account")
-                trailingActionBar.actions: [
-                    Action {
-                        iconName: "tick"
-                        enabled: nameField.displayText.length > 0 && secretField.displayText.length >= 16
-                        onTriggered: {
-                            var newAccount = account;
-                            if (newAccount == null) {
-                                newAccount = accounts.createAccount()
-                            }
+           header: ToolBar {
+                width: parent.width
+                height: 48
 
-                            newAccount.name = nameField.text
-                            newAccount.type = typeSelector.currentIndex == 1 ? Account.TypeTOTP : Account.TypeHOTP
-                            newAccount.secret = secretField.text
-                            newAccount.counter = parseInt(counterField.text)
-                            newAccount.timeStep = parseInt(timeStepField.text)
-                            newAccount.pinLength = parseInt(pinLengthField.text)
-                            print("account is", newAccount, newAccount.name, newAccount.secret, newAccount.counter, newAccount.pinLength, newAccount.timeStep)
+                Rectangle {
+                    anchors.fill: parent
+                    color: "#ffffff"
+                }
+
+                RowLayout {
+                    anchors.fill: parent
+                    anchors.margins: 4
+
+                    ToolButton {
+                        Image {
+                            anchors.margins: 8
+                            anchors.fill: parent
+                            source: "qrc:///back"
+                        }
+                        onClicked: {
                             pageStack.pop();
                         }
                     }
-                ]
+                    Label {
+                        text: account == null ? ("Add account") : ("Edit account")
+                        font.pixelSize: 24
+                    }
+                    RowLayout {
+                        anchors.right: parent.right
+                        Layout.alignment: Qt.AlignRight
+
+                        ToolButton {
+                            //tooltip: "Add account"
+                            Image {
+                                anchors.margins: 8
+                                anchors.fill: parent
+                                source: "qrc:///save"
+                            }
+                            onClicked: {
+                                var newAccount = account;
+                                if (newAccount == null) {
+                                    newAccount = accounts.createAccount();
+                                }
+
+                                newAccount.name = nameField.text;
+                                newAccount.type = typeSelector.currentIndex == 1 ? Account.TypeTOTP : Account.TypeHOTP;
+                                newAccount.secret = secretField.text;
+                                newAccount.counter = parseInt(counterField.text);
+                                newAccount.timeStep = parseInt(timeStepField.text);
+                                newAccount.pinLength = parseInt(pinLengthField.text);
+                                pageStack.pop();
+                            }
+                        }
+                    }
+                }
             }
-*/
 
             Flickable {
                 id: settingsFlickable
                 anchors.fill: parent
-                anchors.topMargin: editPage.header.height
                 contentHeight: settingsColumn.height + settingsColumn.anchors.margins * 2
 
                 Column {
@@ -364,39 +407,39 @@ Item {
                     spacing: 16 //units.gu(2)
 
                     Label {
-                        text: i18n.tr("Name")
+                        text: ("Name")
                     }
                     TextField {
                         id: nameField
                         width: parent.width
                         text: account ? account.name : ""
-                        placeholderText: i18n.tr("Enter the account name")
+                        placeholderText: ("Enter the account name")
                         inputMethodHints: Qt.ImhNoPredictiveText
                     }
 
                     Label {
-                        text: i18n.tr("Type")
+                        text: ("Type")
                     }
 
                     ComboBox {
                         id: typeSelector
                         width: parent.width
                         editable: false
-                        model: [i18n.tr("Counter based"), i18n.tr("Time based")]
+                        model: [("Counter based"), ("Time based")]
                         currentIndex: account && account.type === Account.TypeTOTP ? 1 : 0
                     }
 
                     Label {
-                        text: i18n.tr("Key")
+                        text: ("Key")
                     }
-                    TextArea {
+                    TextField {
                         id: secretField
                         width: parent.width
                         text: account ? account.secret : ""
                         //autoSize: true
                         wrapMode: Text.WrapAnywhere
                         // TRANSLATORS: placeholder text in key textfield
-                        placeholderText: i18n.tr("Enter the 16 or 32 digit key")
+                        placeholderText: ("Enter the 16 or 32 digit key")
                         inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
                     }
                     Row {
@@ -405,7 +448,7 @@ Item {
                         visible: typeSelector.currentIndex == 0
 
                         Label {
-                            text: i18n.tr("Counter")
+                            text: ("Counter")
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         TextField {
@@ -422,7 +465,7 @@ Item {
                         visible: typeSelector.currentIndex == 1
 
                         Label {
-                            text: i18n.tr("Time step")
+                            text: ("Time step")
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         TextField {
@@ -438,7 +481,7 @@ Item {
                         spacing: 4 //units.gu(1)
 
                         Label {
-                            text: i18n.tr("PIN length")
+                            text: ("PIN length")
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         TextField {
@@ -467,7 +510,37 @@ Item {
         id: grabCodeComponent
         Page {
             id: grabCodePage
-            title: "Scan QR code"
+
+            header: ToolBar {
+                width: parent.width
+                height: 48
+
+                Rectangle {
+                    anchors.fill: parent
+                    color: "#ffffff"
+                }
+
+                RowLayout {
+                    anchors.fill: parent
+                    anchors.margins: 4
+                    spacing: 4
+
+                    ToolButton {
+                        Image {
+                            anchors.margins: 8
+                            anchors.fill: parent
+                            source: "qrc:///back"
+                        }
+                        onClicked: {
+                            pageStack.pop();
+                        }
+                    }
+                    Label {
+                        text: ("Scan QR code")
+                        font.pixelSize: 24
+                    }
+                }
+            }
 
             QRCodeReader {
                 id: qrCodeReader
@@ -490,7 +563,7 @@ Item {
                 id: camera
 
                 focus.focusMode: Camera.FocusContinuous
-                focus.focusPointMode: Camera.FocusPointAuto
+                focus.focusPointMode: Camera.FocusPointCenter
 
                 /* Use only digital zoom for now as it's what phone cameras mostly use.
                        TODO: if optical zoom is available, maximumZoom should be the combined
@@ -501,8 +574,6 @@ Item {
 
                 function startAndConfigure() {
                     start();
-                    focus.focusMode = Camera.FocusContinuous
-                    focus.focusPointMode = Camera.FocusPointAuto
                 }
 
 

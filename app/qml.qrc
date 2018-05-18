@@ -2,7 +2,9 @@
     <qresource prefix="/">
         <file>qml/authenticator-ng.qml</file>
         <file alias="add">/usr/share/icons/suru/actions/scalable/add.svg</file>
-        <file alias="reload">/usr/share/icons/suru/actions/scalable/reload.svg</file>
+        <file alias="back">/usr/share/icons/suru/actions/scalable/back.svg</file>
         <file alias="camera">/usr/share/icons/suru/devices/scalable/camera-photo-symbolic.svg</file>
+        <file alias="reload">/usr/share/icons/suru/actions/scalable/reload.svg</file>
+        <file alias="save">/usr/share/icons/suru/actions/scalable/save.svg</file>
     </qresource>
 </RCC>
