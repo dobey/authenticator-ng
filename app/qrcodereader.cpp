@@ -91,13 +91,8 @@ void QRCodeReader::grab()
 
     QImage img = m_mainWindow->grabWindow();
 
-//    qDebug() << "got image" << img.size();
-
     Reader *reader = new Reader;
-    reader->moveToThread(&m_readerThread);
-    connect(&m_readerThread, SIGNAL(finished()), reader, SLOT(deleteLater()));
     connect(reader, SIGNAL(resultReady(QString, QString)), this, SLOT(handleResults(QString, QString)));
-    m_readerThread.start();
 
     QMetaObject::invokeMethod(reader, "doWork", Q_ARG(QImage, img));
 }

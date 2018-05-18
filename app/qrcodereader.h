@@ -23,7 +23,6 @@
 
 #include <QObject>
 #include <QQuickWindow>
-#include <QThread>
 
 class QRCodeReader : public QObject
 {
@@ -65,8 +64,6 @@ private:
     quint64 m_counter;
     int m_timeStep;
     int m_pinLength;
-
-    QThread m_readerThread;
 };
 
 class Reader : public QObject
