@@ -18,8 +18,8 @@
 
 #include "qrcodereader.h"
 
-#include <../3rdParty/QZBarImage.h>
-#include <ImageScanner.h>
+#include "../3rdParty/QZBarImage.h"
+#include <zbar/ImageScanner.h>
 
 #include <QGuiApplication>
 #include <QWindow>

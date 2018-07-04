@@ -36,7 +36,7 @@ MainView {
     theme.name: "Ubuntu.Components.Themes.SuruDark"
 
     Component.onCompleted: {
-        i18n.domain = "authenticator"
+        i18n.domain = "authenticator-ng"
     }
 
     PageStack {

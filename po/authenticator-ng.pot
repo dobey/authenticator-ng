@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-10 00:34+0200\n"
+"POT-Creation-Date: 2018-07-04 17:27-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,103 +17,95 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/qml/authenticator-ng.qml:58
-#: app/qml/authenticator-ng.qml:339
+#: ../app/qml/authenticator-ng.qml:57 ../app/qml/authenticator-ng.qml:319
 msgid "Add account"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:65
-#: app/qml/authenticator-ng.qml:485
+#: ../app/qml/authenticator-ng.qml:64 ../app/qml/authenticator-ng.qml:462
 msgid "Scan QR code"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:77
+#: ../app/qml/authenticator-ng.qml:76
 msgid "No account set up. Use the buttons in the toolbar to add accounts."
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:123
+#: ../app/qml/authenticator-ng.qml:122
 msgid "Delete"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:137
+#: ../app/qml/authenticator-ng.qml:136
 msgid "Copy"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:145
+#: ../app/qml/authenticator-ng.qml:144
 msgid "Edit"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:173
+#: ../app/qml/authenticator-ng.qml:171
 msgid "Copied"
 msgstr ""
 
-#. TRANSLATORS: Text on a button
-#: app/qml/authenticator-ng.qml:240
-msgid "Generate PIN"
-msgstr ""
-
-#: app/qml/authenticator-ng.qml:339
+#: ../app/qml/authenticator-ng.qml:319
 msgid "Edit account"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:383
+#: ../app/qml/authenticator-ng.qml:360
 msgid "Name"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:389
+#: ../app/qml/authenticator-ng.qml:366
 msgid "Enter the account name"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:394
+#: ../app/qml/authenticator-ng.qml:371
 msgid "Type"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:400
+#: ../app/qml/authenticator-ng.qml:377
 msgid "Counter based"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:400
+#: ../app/qml/authenticator-ng.qml:377
 msgid "Time based"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:405
+#: ../app/qml/authenticator-ng.qml:382
 msgid "Key"
 msgstr ""
 
 #. TRANSLATORS: placeholder text in key textfield
-#: app/qml/authenticator-ng.qml:414
+#: ../app/qml/authenticator-ng.qml:391
 msgid "Enter the 16 or 32 digit key"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:423
+#: ../app/qml/authenticator-ng.qml:400
 msgid "Counter"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:440
+#: ../app/qml/authenticator-ng.qml:417
 msgid "Time step"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:456
+#: ../app/qml/authenticator-ng.qml:433
 msgid "PIN length"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:544
+#: ../app/qml/authenticator-ng.qml:544
 msgid "Scan a QR Code containing account information"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:563
+#: ../app/qml/authenticator-ng.qml:563
 msgid "Remove account?"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:564
-#, qt-format
+#: ../app/qml/authenticator-ng.qml:564
 msgid "Are you sure you want to remove %1?"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:572
+#: ../app/qml/authenticator-ng.qml:572
 msgid "Yes"
 msgstr ""
 
-#: app/qml/authenticator-ng.qml:580
+#: ../app/qml/authenticator-ng.qml:580
 msgid "Cancel"
 msgstr ""
