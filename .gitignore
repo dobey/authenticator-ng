@@ -1,2 +1,8 @@
 build/
 
+*~
+
+POTFILES
+POTFILES.in
+Makefile.in.in
+
