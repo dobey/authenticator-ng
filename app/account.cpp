@@ -26,7 +26,7 @@
 #endif
 
 extern "C" {
-#include "oath.h"
+#include <liboath/oath.h>
 }
 
 Account::Account(const QUuid &id, QObject *parent) :

@@ -26,11 +26,13 @@ endif(EXISTS "/etc/debian_version")
 find_package(Threads REQUIRED)
 find_package(PkgConfig REQUIRED)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
 pkg_check_modules(AUTH_STATIC REQUIRED
-  liboath
   zbar
 )
 pkg_check_modules(AUTH_DYNAMIC REQUIRED
+  libcrypto
   libjpeg
   libv4l2
 )
@@ -59,6 +61,7 @@ else(CLICK_MODE)
   )
 endif(CLICK_MODE)
 
+add_subdirectory(liboath)
 add_subdirectory(app)
 add_subdirectory(po)
 
