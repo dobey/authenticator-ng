@@ -19,7 +19,7 @@
  *
  */
 
-#include "oath.h"
+#include <liboath/oath.h>
 
 #include <stdio.h>
 #define DEBUG 1
@@ -50,13 +50,6 @@ main (void)
     "01234567890123456789012345678901234";
   char otp[10];
   size_t i;
-
-  rc = oath_init ();
-  if (rc != OATH_OK)
-    {
-      printf ("oath_init: %d\n", rc);
-      return 1;
-    }
 
   if (OATH_TOTP_DEFAULT_TIME_STEP_SIZE != 30)
     {
@@ -157,13 +150,6 @@ main (void)
 	  else
 	    return 1;
 	}
-    }
-
-  rc = oath_done ();
-  if (rc != OATH_OK)
-    {
-      printf ("oath_done: %d\n", rc);
-      return 1;
     }
 
   return 0;

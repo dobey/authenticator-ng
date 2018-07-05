@@ -12,3 +12,11 @@ add_library(liboath STATIC
 target_link_libraries(liboath
   ${CMAKE_THREAD_LIBS_INIT}
 )
+
+
+add_subdirectory(tests)
+
+set(COVERAGE_TEST_TARGETS
+  ${COVERAGE_TEST_TARGETS}
+  PARENT_SCOPE
+)

@@ -20,7 +20,7 @@
  */
 
 
-#include "oath.h"
+#include <liboath/oath.h>
 
 #include <stdio.h>
 
