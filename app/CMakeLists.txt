@@ -17,9 +17,10 @@ add_executable(authenticator-ng
 )
 
 target_link_libraries(authenticator-ng
+  liboath
   -Wl,-Bstatic ${AUTH_STATIC_LIBRARIES} -Wl,-Bdynamic
   ${AUTH_DYNAMIC_LIBRARIES}
-
+  
   Qt5::Core
   Qt5::Gui
   Qt5::Qml
