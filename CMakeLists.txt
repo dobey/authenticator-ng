@@ -1,6 +1,8 @@
 project(authenticator-ng LANGUAGES C CXX)
 cmake_minimum_required(VERSION 2.8.9)
 
+enable_testing()
+
 set(GETTEXT_PACKAGE ${CMAKE_PROJECT_NAME})
 
 set(CMAKE_AUTOMOC ON)
@@ -65,5 +67,8 @@ add_subdirectory(liboath)
 add_subdirectory(app)
 add_subdirectory(po)
 
-enable_testing()
 find_package(CoverageReport)
+enable_coverage_report(
+  TESTS ${COVERAGE_TEST_TARGETS}
+  FILTER /usr/include ${CMAKE_BINARY_DIR}/*
+)

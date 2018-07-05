@@ -19,7 +19,7 @@
  *
  */
 
-#include "oath.h"
+#include <liboath/oath.h>
 
 #include <stdio.h>
 
@@ -64,13 +64,6 @@ main (void)
   unsigned digits;
   time_t now;
   size_t i;
-
-  rc = oath_init ();
-  if (rc != OATH_OK)
-    {
-      printf ("oath_init: %d\n", rc);
-      return 1;
-    }
 
   for (i = 0; i < sizeof (tv) / sizeof (tv[0]); i++)
     {
@@ -154,7 +147,7 @@ main (void)
 	}
       if (otp_counter != tv[i].otp_counter)
 	{
-	  printf ("validate3 loop %ld failed (counter %d != %d)?!\n",
+	  printf ("validate3 loop %ld failed (counter %ld != %ld)?!\n",
 		  i, otp_counter, tv[i].otp_counter);
 	  return 1;
 	}
@@ -182,17 +175,10 @@ main (void)
 	}
       if (otp_counter != tv[i].otp_counter)
 	{
-	  printf ("validate3_callback loop %ld failed (counter %d != %d)?!\n",
+	  printf ("validate3_callback loop %ld failed (counter %ld != %ld)?!\n",
 		  i, otp_counter, tv[i].otp_counter);
 	  return 1;
 	}
-    }
-
-  rc = oath_done ();
-  if (rc != OATH_OK)
-    {
-      printf ("oath_done: %d\n", rc);
-      return 1;
     }
 
   return 0;

@@ -19,7 +19,7 @@
  *
  */
 
-#include "oath.h"
+#include <liboath/oath.h>
 
 #include <stdio.h>
 
@@ -127,13 +127,6 @@ main (void)
   uint64_t moving_factor;
   unsigned digits;
 
-  rc = oath_init ();
-  if (rc != OATH_OK)
-    {
-      printf ("oath_init: %d\n", rc);
-      return 1;
-    }
-
   for (digits = 6; digits <= 8; digits++)
     for (moving_factor = 0; moving_factor < MAX_ITER; moving_factor++)
       {
@@ -188,13 +181,6 @@ main (void)
 	      }
 	  }
       }
-
-  rc = oath_done ();
-  if (rc != OATH_OK)
-    {
-      printf ("oath_done: %d\n", rc);
-      return 1;
-    }
 
   return 0;
 }

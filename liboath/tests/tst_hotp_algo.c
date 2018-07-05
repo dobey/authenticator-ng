@@ -19,7 +19,7 @@
  *
  */
 
-#include "oath.h"
+#include <liboath/oath.h>
 
 #include <stdio.h>
 
@@ -123,13 +123,6 @@ main (void)
   uint64_t moving_factor;
   unsigned digits;
 
-  rc = oath_init ();
-  if (rc != OATH_OK)
-    {
-      printf ("oath_init: %d\n", rc);
-      return 1;
-    }
-
   moving_factor = 1099511627776ULL;
   rc = oath_hotp_generate (nulls, 1, moving_factor, 6, false,
 			   OATH_HOTP_DYNAMIC_TRUNCATION, otp);
@@ -207,13 +200,6 @@ main (void)
 	  printf ("oath_hotp_generate %d digits %d\n", digits, rc);
 	  return 1;
 	}
-    }
-
-  rc = oath_done ();
-  if (rc != OATH_OK)
-    {
-      printf ("oath_done: %d\n", rc);
-      return 1;
     }
 
   return 0;
