@@ -69,6 +69,7 @@ add_subdirectory(po)
 
 find_package(CoverageReport)
 enable_coverage_report(
+  TARGETS liboath authenticator-ng
   TESTS ${COVERAGE_TEST_TARGETS}
   FILTER /usr/include ${CMAKE_BINARY_DIR}/*
 )
