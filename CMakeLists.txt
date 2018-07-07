@@ -1,6 +1,8 @@
 project(authenticator-ng LANGUAGES C CXX)
 cmake_minimum_required(VERSION 2.8.9)
 
+enable_testing()
+
 set(GETTEXT_PACKAGE ${CMAKE_PROJECT_NAME})
 
 set(CMAKE_AUTOMOC ON)
@@ -26,11 +28,13 @@ endif(EXISTS "/etc/debian_version")
 find_package(Threads REQUIRED)
 find_package(PkgConfig REQUIRED)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
 pkg_check_modules(AUTH_STATIC REQUIRED
-  liboath
   zbar
 )
 pkg_check_modules(AUTH_DYNAMIC REQUIRED
+  libcrypto
   libjpeg
   libv4l2
 )
@@ -59,8 +63,13 @@ else(CLICK_MODE)
   )
 endif(CLICK_MODE)
 
+add_subdirectory(liboath)
 add_subdirectory(app)
 add_subdirectory(po)
 
-enable_testing()
 find_package(CoverageReport)
+enable_coverage_report(
+  TARGETS liboath authenticator-ng
+  TESTS ${COVERAGE_TEST_TARGETS}
+  FILTER /usr/include ${CMAKE_BINARY_DIR}/*
+)
