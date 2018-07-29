@@ -6,3 +6,4 @@ Exec=authenticator-ng %u
 Terminal=false
 Icon=authenticator-ng.svg
 X-Ubuntu-Touch=true
+X-Ubuntu-StageHint=SideStage
