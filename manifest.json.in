@@ -1,6 +1,6 @@
 {
     "description": "Two factor authentication helper app.",
-    "framework": "ubuntu-sdk-15.04.4",
+    "framework": "ubuntu-sdk-16.04",
     "architecture": "armhf",
     "hooks": {
         "authenticator": {
@@ -10,6 +10,6 @@
     },
     "maintainer": "Rodney Dawes <.@.>",
     "name": "authenticator-ng.dobey",
-    "title": "Authenticator",
-    "version": "1.0"
+    "title": "Authenticator NG",
+    "version": "2.0"
 }
